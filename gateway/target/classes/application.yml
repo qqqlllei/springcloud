@@ -1,0 +1,40 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: gateway-server
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:root@127.0.0.1:8761/eureka/
+
+
+
+# 下面整个树都非必须，如果不配置，将默认使用 http://GATEWAY:GATEWAY_PORT/想要访问的Eureka服务id的小写/** 路由到：http://想要访问的Eureka服务id的小写:该服务端口/**
+zuul:
+  routes:
+    user-server:                         # 可以随便写，在zuul上面唯一即可；当这里的值 = service-id时，service-id可以不写。
+      path: /user/**                      # 想要映射到的路径(针对的是gateway的路径映射到那个服务)
+      service-id: user-server            # Eureka中的serviceId
+
+    auth-server:
+      path: /auth/**
+      service-id : auth-server
+#zuul的HA  针对于统一体系下的服务，如都会注册到eureka的服务，那么zuul同其他服务一样，只要注册到eureka，那么自然就做到了HA，如果是其他服务，
+#如nginx里面跑的前端服务，如手机app，不可能说讲app服务也注册到eureka里，那么就需要在zuul 服务前面放上一个代理，如nginx做高可用
+
+
+security:
+  oauth2:
+    client:
+      access-token-uri: http://localhost:${server.port}/auth/oauth/token
+      user-authorization-uri: http://localhost:${server.port}/auth/oauth/authorize
+      client-id: webapp
+    resource:
+      user-info-uri: http://localhost:${server.port}/auth/user
+      prefer-token-info: false
+
+
+
+
+
