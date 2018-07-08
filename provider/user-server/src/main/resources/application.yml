@@ -14,7 +14,7 @@ security:
   oauth2:
     resource:
       id: account-service
-      user-info-uri: http://localhost:8000/auth/user
+      user-info-uri: http://localhost:8001/user
       prefer-token-info: false
 
 
