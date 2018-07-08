@@ -20,20 +20,21 @@ zuul:
     auth-server:
       path: /auth/**
       service-id : auth-server
+  sensitive-headers: Cookie,Set-Cookie
 #zuul的HA  针对于统一体系下的服务，如都会注册到eureka的服务，那么zuul同其他服务一样，只要注册到eureka，那么自然就做到了HA，如果是其他服务，
 #如nginx里面跑的前端服务，如手机app，不可能说讲app服务也注册到eureka里，那么就需要在zuul 服务前面放上一个代理，如nginx做高可用
 
 
-security:
-  oauth2:
-    client:
-      access-token-uri: http://localhost:${server.port}/auth/oauth/token
-      user-authorization-uri: http://localhost:${server.port}/auth/oauth/authorize
-      client-id: webapp
-    resource:
-      user-info-uri: http://localhost:${server.port}/auth/user
-      prefer-token-info: false
 
+#security:
+#  oauth2:
+#    client:
+#      access-token-uri: http://localhost:${server.port}/auth/oauth/token
+#      user-authorization-uri: http://localhost:${server.port}/auth/oauth/authorize
+#      client-id: webapp
+#    resource:
+#      user-info-uri: http://localhost:${server.port}/auth/user
+#      prefer-token-info: false
 
 
 
