@@ -17,6 +17,7 @@ security:
 
 oauth:
   client:
+    jwtSigningKey: jwtSigningKey
     clients[0]:
       clientId: user
       clientSecret: userSecret
