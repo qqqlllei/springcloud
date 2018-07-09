@@ -7,15 +7,20 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://root:root@127.0.0.1:8761/eureka/
+      defaultZone: http://10.33.80.101:7010/eureka/,http://10.33.80.101:7011/eureka/
 
 
-security:
+
+
+cloud:
   oauth2:
-    resource:
-      id: account-service
-      user-info-uri: http://localhost:8001/user
-      prefer-token-info: false
+    client:
+      id: user-server
+      accessTokenUrl: http://localhost:8888/oauth/token
+      clientId: admin
+      clientSecret: admin
+      clientAuthenticationScheme: header
+      tokenStore: jwt
 
 
 

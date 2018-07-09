@@ -8,6 +8,7 @@
         <module>gateway</module>
         <module>auth</module>
         <module>provider</module>
+        <module>common</module>
     </modules>
 
     <parent>

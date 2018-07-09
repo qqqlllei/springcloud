@@ -1,4 +1,4 @@
-package com.qqlei.cloud.provider.user.security;
+package com.qqlei.cloud.provider.book.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

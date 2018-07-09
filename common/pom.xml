@@ -9,12 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.qqlei.cloud.provider</groupId>
-    <artifactId>provider-server</artifactId>
+    <groupId>com.qqlei.common</groupId>
+    <artifactId>common</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>user-server</module>
-        <module>book-server</module>
+        <module>security</module>
     </modules>
 
 

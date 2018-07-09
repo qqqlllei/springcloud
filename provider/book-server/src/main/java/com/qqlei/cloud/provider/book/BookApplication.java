@@ -1,10 +1,8 @@
-package com.qqlei.cloud.provider.user;
+package com.qqlei.cloud.provider.book;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Created by Administrator on 2018/4/14 0014.
@@ -12,11 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableScheduling
-@EnableFeignClients
-public class UserApplication {
+public class BookApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserApplication.class,args);
+        SpringApplication.run(BookApplication.class,args);
     }
 }

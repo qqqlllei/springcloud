@@ -1,4 +1,4 @@
-package com.qqlei.cloud.provider.user.web;
+package com.qqlei.cloud.provider.book.web;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Administrator on 2018/4/14 0014.
  */
 @RestController
-public class UserController {
+public class Controller {
 
-    @RequestMapping("/user")
+    @RequestMapping("/book")
     public String user(HttpServletRequest request){
-        return "success:"+request.getServerPort();
+        String time = request.getParameter("name");
+        return "success:book-server"+request.getServerPort()+":time="+time;
     }
 }

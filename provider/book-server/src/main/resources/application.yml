@@ -1,0 +1,21 @@
+server:
+  port: 8083
+spring:
+    application:
+      name: book-server
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://10.33.80.101:7010/eureka/,http://10.33.80.101:7011/eureka/
+
+
+security:
+  oauth2:
+    resource:
+      id: account-service
+      user-info-uri: http://localhost:8001/user
+      prefer-token-info: false
+
+
+
