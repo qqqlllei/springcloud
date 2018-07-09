@@ -16,7 +16,6 @@ public class ScheduledService {
 
     @Scheduled(cron = "0/10 * * * * ?")
     public void timerToNow(){
-        System.out.println("now time:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         String result = bookFegin.helloService(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         System.out.println("===============>book return message="+result);
     }
