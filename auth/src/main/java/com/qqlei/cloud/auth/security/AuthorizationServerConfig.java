@@ -27,8 +27,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private UserDetailsService userDetailsService;
 
-//    @Autowired
-//    private PropertiesClientDetailsServiceImpl propertiesClientDetailsService;
+    @Autowired
+    private PropertiesClientDetailsServiceImpl propertiesClientDetailsService;
 
     @Autowired
     private TokenStore tokenStore;
@@ -39,12 +39,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenEnhancer jwtTokenEnhancer;
 
-//    @Override
-//    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-//        security.tokenKeyAccess("permitAll()");
-//        security.checkTokenAccess("permitAll()");
-//        security.allowFormAuthenticationForClients();
-//    }
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.tokenKeyAccess("permitAll()");
+        security.checkTokenAccess("permitAll()");
+        security.allowFormAuthenticationForClients();
+    }
 
 
     /**
@@ -55,14 +55,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//        clients.withClientDetails(propertiesClientDetailsService);
+        clients.withClientDetails(propertiesClientDetailsService);
 
 
-        clients.inMemory()
-                .withClient("admin")
-                .secret("admin")
-                .authorizedGrantTypes("refresh_token", "password", "client_credentials")
-                .scopes("webclient", "mobileclient");
+//        clients.inMemory()
+//                .withClient("admin")
+//                .secret("admin")
+//                .authorizedGrantTypes("refresh_token", "password", "client_credentials")
+//                .scopes("webclient", "mobileclient");
     }
 
     /**

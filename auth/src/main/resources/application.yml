@@ -3,10 +3,6 @@ server:
 spring:
   application:
     name: auth-server
-#  redis:
-#    database: 0
-#    host: localhost
-#    port: 6379
 
 eureka:
   client:
@@ -19,6 +15,18 @@ security:
     resource:
       filter-order: 3  # 待确认
 
+oauth:
+  client:
+    clients[0]:
+      clientId: user
+      clientSecret: userSecret
+      accessTokenValidateSeconds: 7200
+      scope: "*"
+    clients[1]:
+      clientId: book
+      clientSecret: bookSecret
+      accessTokenValidateSeconds: 7200
+      scope: "*"
 
 
 
