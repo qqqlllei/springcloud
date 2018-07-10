@@ -4,10 +4,10 @@ spring:
   application:
     name: auth-server
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://root:root@127.0.0.1:8761/eureka/
+eureka:
+  client:
+    service-url:
+      defaultZone: http://10.33.80.101:7010/eureka/,http://10.33.80.101:7011/eureka/
 
 
 security:

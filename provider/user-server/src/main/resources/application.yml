@@ -12,15 +12,15 @@ eureka:
 
 
 
-cloud:
-  oauth2:
-    client:
-      id: user-server
-      accessTokenUrl: http://localhost:8888/oauth/token
-      clientId: admin
-      clientSecret: admin
-      clientAuthenticationScheme: header
-      tokenStore: jwt
+#cloud:
+#  oauth2:
+#    client:
+#      id: user-server
+#      accessTokenUrl: http://localhost:8888/oauth/token
+#      clientId: admin
+#      clientSecret: admin
+#      clientAuthenticationScheme: header
+#      tokenStore: jwt
 
 
 
