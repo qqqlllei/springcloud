@@ -4,17 +4,13 @@ import com.qqlei.cloud.auth.security.integration.IntegrationAuthentication;
 import com.qqlei.cloud.auth.security.integration.IntegrationAuthenticationContext;
 import com.qqlei.cloud.auth.security.integration.authenticator.IntegrationAuthenticator;
 import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
+import com.qqlei.cloud.auth.security.vo.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -43,18 +39,10 @@ public class IntegrationUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("用户名或密码错误");
         }
 
-        User user =  mockUser();
-
+        User user = new User();
+        BeanUtils.copyProperties(sysUserAuthentication, user);
         return user;
 
-    }
-
-
-    private User mockUser() {
-        Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("admin"));//用户所拥有的角色信息
-        User user = new User("admin","123456",authorities);
-        return user;
     }
 
     private SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication) {

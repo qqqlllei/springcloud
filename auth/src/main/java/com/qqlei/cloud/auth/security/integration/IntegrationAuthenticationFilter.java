@@ -9,6 +9,7 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 
 @Component
-public class IntegrationAuthenticationFilter extends GenericFilterBean implements ApplicationContextAware {
+public class IntegrationAuthenticationFilter extends OncePerRequestFilter implements ApplicationContextAware {
 
     private static final String AUTH_TYPE_PARM_NAME = "auth_type";
 
@@ -43,24 +44,18 @@ public class IntegrationAuthenticationFilter extends GenericFilterBean implement
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if(requestMatcher.matches(request)){
-            //设置集成登录信息
             IntegrationAuthentication integrationAuthentication = new IntegrationAuthentication();
             integrationAuthentication.setAuthType(request.getParameter(AUTH_TYPE_PARM_NAME));
             integrationAuthentication.setAuthParameters(request.getParameterMap());
             IntegrationAuthenticationContext.set(integrationAuthentication);
             try{
-                //预处理
+
                 this.prepare(integrationAuthentication);
 
                 filterChain.doFilter(request,response);
 
-                //后置处理
                 this.complete(integrationAuthentication);
             }finally {
                 IntegrationAuthenticationContext.clear();
@@ -70,10 +65,6 @@ public class IntegrationAuthenticationFilter extends GenericFilterBean implement
         }
     }
 
-    /**
-     * 进行预处理
-     * @param integrationAuthentication
-     */
     private void prepare(IntegrationAuthentication integrationAuthentication) {
 
         //延迟加载认证器
@@ -87,7 +78,7 @@ public class IntegrationAuthenticationFilter extends GenericFilterBean implement
         }
 
         if(this.authenticators == null){
-            this.authenticators = new ArrayList<IntegrationAuthenticator>();
+            this.authenticators = new ArrayList<>();
         }
 
         for (IntegrationAuthenticator authenticator: authenticators) {
@@ -97,10 +88,6 @@ public class IntegrationAuthenticationFilter extends GenericFilterBean implement
         }
     }
 
-    /**
-     * 后置处理
-     * @param integrationAuthentication
-     */
     private void complete(IntegrationAuthentication integrationAuthentication){
         for (IntegrationAuthenticator authenticator: authenticators) {
             if(authenticator.support(integrationAuthentication)){

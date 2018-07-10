@@ -13,4 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserFegin {
     @RequestMapping(value="/findUserByUsername")
     SysUserAuthentication findUserByUsername(@RequestParam("name") String name);
+
+    @RequestMapping(value="/findUserByPhoneNumber")
+    SysUserAuthentication findUserByPhoneNumber(@RequestParam("phone") String phone);
 }

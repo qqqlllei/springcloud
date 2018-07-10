@@ -7,13 +7,9 @@ import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-/**
- * 默认登录处理
- * @author LIQIU
- * @date 2018-3-31
- **/
 @Component
 @Primary
 public class UsernamePasswordAuthenticator extends AbstractPreparableIntegrationAuthenticator {
