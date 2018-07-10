@@ -11,5 +11,6 @@ public class SmsAuthenticateBeforeEvent extends ApplicationEvent {
      */
     public SmsAuthenticateBeforeEvent(Object source) {
         super(source);
+        System.out.println("SmsAuthenticateBeforeEvent");
     }
 }

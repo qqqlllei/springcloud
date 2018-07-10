@@ -11,5 +11,6 @@ public class SmsAuthenticateSuccessEvent extends ApplicationEvent {
      */
     public SmsAuthenticateSuccessEvent(Object source) {
         super(source);
+        System.out.println("SmsAuthenticateSuccessEvent");
     }
 }

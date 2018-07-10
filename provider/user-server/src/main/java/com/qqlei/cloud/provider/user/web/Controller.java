@@ -43,4 +43,18 @@ public class Controller {
         return sysUserAuthentication;
     }
 
+
+
+    @RequestMapping(value="/findUserByOpenId",method= RequestMethod.GET)
+    SysUserAuthentication findUserByOpenId(@RequestParam("openId") String openId){
+        SysUserAuthentication sysUserAuthentication = new SysUserAuthentication();
+        sysUserAuthentication.setName("lilei");
+        sysUserAuthentication.setUsername(openId);
+        sysUserAuthentication.setPassword(passwordEncoder.encode("123456"));
+        sysUserAuthentication.setId(1L);
+        return sysUserAuthentication;
+    }
+
+
+
 }

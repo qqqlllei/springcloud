@@ -16,4 +16,7 @@ public interface UserFegin {
 
     @RequestMapping(value="/findUserByPhoneNumber")
     SysUserAuthentication findUserByPhoneNumber(@RequestParam("phone") String phone);
+
+    @RequestMapping(value="/findUserByOpenId")
+    SysUserAuthentication findUserByOpenId(@RequestParam("openId") String openId);
 }
