@@ -15,6 +15,24 @@ zuul:
       enabled: true
       clients: auth-server,user-server
   ignoredServices: '*'
+  client:
+    clients[0]:
+      path: /user/**
+      serviceId: user-server
+      url:
+      stripPrefix: 1
+      retryable: 1
+      sensitiveHeadersList:
+    clients[1]:
+      path: /book/**
+      serviceId: book-server
+      url:
+      stripPrefix: 1
+      retryable: 1
+      sensitiveHeadersList:
+
+
+
 
 
 # 下面整个树都非必须，如果不配置，将默认使用 http://GATEWAY:GATEWAY_PORT/想要访问的Eureka服务id的小写/** 路由到：http://想要访问的Eureka服务id的小写:该服务端口/**

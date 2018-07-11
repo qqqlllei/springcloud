@@ -26,8 +26,6 @@ public class GataWayRoute {
     private String stripPrefix;
     private String retryable;
     private String sensitiveHeadersList;
-    private Timestamp createTime;
-    private Timestamp updateTime;
     private String status;
 
     public String getPath() {
@@ -76,22 +74,6 @@ public class GataWayRoute {
 
     public void setSensitiveHeadersList(String sensitiveHeadersList) {
         this.sensitiveHeadersList = sensitiveHeadersList;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
     }
 
     public String getStatus() {
