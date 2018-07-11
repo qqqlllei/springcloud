@@ -19,26 +19,16 @@ package com.qqlei.cloud.gateway.entity;
 
 import java.sql.Timestamp;
 
-public class SysZuulRoute {
-    private Long id;
+public class GataWayRoute {
     private String path;
     private String serviceId;
     private String url;
     private String stripPrefix;
     private String retryable;
-    private String enabled;
     private String sensitiveHeadersList;
     private Timestamp createTime;
     private Timestamp updateTime;
     private String status;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getPath() {
         return path;
@@ -78,14 +68,6 @@ public class SysZuulRoute {
 
     public void setRetryable(String retryable) {
         this.retryable = retryable;
-    }
-
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
     }
 
     public String getSensitiveHeadersList() {

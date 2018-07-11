@@ -17,7 +17,7 @@
 
 package com.qqlei.cloud.gateway.config;
 
-import com.qqlei.cloud.gateway.entity.SysZuulRoute;
+import com.qqlei.cloud.gateway.entity.GataWayRoute;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,6 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.cloud.netflix.zuul.filters.discovery.DiscoveryClientRouteLocator;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.*;
 
@@ -33,16 +32,15 @@ public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
 
     private Logger logger = LoggerFactory.getLogger(DynamicRouteLocator.class);
 
-    private static String GATEWAY_ROUTE_KEY = "GATEWAY_ROUTE_KEY";
-
     private ZuulProperties properties;
-    private RedisTemplate redisTemplate;
+
+    private GataWayClientProperties gataWayClientProperties;
 
     public DynamicRouteLocator(String servletPath, DiscoveryClient discovery, ZuulProperties properties,
-                               ServiceInstance localServiceInstance, RedisTemplate redisTemplate) {
+                               ServiceInstance localServiceInstance,GataWayClientProperties gataWayClientProperties) {
         super(servletPath, discovery, properties, localServiceInstance);
         this.properties = properties;
-        this.redisTemplate = redisTemplate;
+        this.gataWayClientProperties= gataWayClientProperties;
     }
 
 
@@ -73,40 +71,32 @@ public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
     private Map<String, ZuulProperties.ZuulRoute> locateRoutesFromDb() {
         Map<String, ZuulProperties.ZuulRoute> routes = new LinkedHashMap<>();
 
-        Object obj = redisTemplate.opsForValue().get(GATEWAY_ROUTE_KEY);
-        if (obj == null) {
-            return routes;
-        }
-
-        List<SysZuulRoute> results = (List<SysZuulRoute>) obj;
-        for (SysZuulRoute result : results) {
+        List<GataWayRoute> results = Arrays.asList(gataWayClientProperties.getClients());
+        for (GataWayRoute result : results) {
             if (StringUtils.isBlank(result.getPath()) && StringUtils.isBlank(result.getUrl())) {
                 continue;
             }
 
             ZuulProperties.ZuulRoute zuulRoute = new ZuulProperties.ZuulRoute();
-            try {
-                zuulRoute.setId(result.getServiceId());
-                zuulRoute.setPath(result.getPath());
-                zuulRoute.setServiceId(result.getServiceId());
-                zuulRoute.setRetryable(("0".equals(result.getRetryable()) ? Boolean.FALSE : Boolean.TRUE));
-                zuulRoute.setStripPrefix(("0".equals(result.getStripPrefix()) ? Boolean.FALSE : Boolean.TRUE));
-                zuulRoute.setUrl(result.getUrl());
-                List<String> sensitiveHeadersList=null;
-                if(StringUtils.isNotBlank(result.getSensitiveHeadersList())){
-                    sensitiveHeadersList = Arrays.asList(result.getSensitiveHeadersList().split(","));
-                }
-
-                if (sensitiveHeadersList != null) {
-                    Set<String> sensitiveHeaderSet = new HashSet<>();
-                    sensitiveHeadersList.forEach(sensitiveHeader -> sensitiveHeaderSet.add(sensitiveHeader));
-                    zuulRoute.setSensitiveHeaders(sensitiveHeaderSet);
-                    zuulRoute.setCustomSensitiveHeaders(true);
-                }
-            } catch (Exception e) {
-                logger.error("从数据库加载路由配置异常", e);
+            zuulRoute.setId(result.getServiceId());
+            zuulRoute.setPath(result.getPath());
+            zuulRoute.setServiceId(result.getServiceId());
+            zuulRoute.setRetryable(("0".equals(result.getRetryable()) ? Boolean.FALSE : Boolean.TRUE));
+            zuulRoute.setStripPrefix(("0".equals(result.getStripPrefix()) ? Boolean.FALSE : Boolean.TRUE));
+            zuulRoute.setUrl(result.getUrl());
+            List<String> sensitiveHeadersList=null;
+            if(StringUtils.isNotBlank(result.getSensitiveHeadersList())){
+                sensitiveHeadersList = Arrays.asList(result.getSensitiveHeadersList().split(","));
             }
-            logger.debug("添加数据库自定义的路由配置,path：{}，serviceId:{}", zuulRoute.getPath(), zuulRoute.getServiceId());
+
+            if (sensitiveHeadersList != null) {
+                Set<String> sensitiveHeaderSet = new HashSet<>();
+                sensitiveHeadersList.forEach(sensitiveHeader -> sensitiveHeaderSet.add(sensitiveHeader));
+                zuulRoute.setSensitiveHeaders(sensitiveHeaderSet);
+                zuulRoute.setCustomSensitiveHeaders(true);
+            }
+
+            logger.debug("自定义的路由配置,path：{}，serviceId:{}", zuulRoute.getPath(), zuulRoute.getServiceId());
             routes.put(zuulRoute.getPath(), zuulRoute);
         }
         return routes;
