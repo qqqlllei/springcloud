@@ -30,10 +30,8 @@ public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
     @Override
     protected LinkedHashMap<String, ZuulProperties.ZuulRoute> locateRoutes() {
         LinkedHashMap<String, ZuulProperties.ZuulRoute> routesMap = new LinkedHashMap<>();
-        //读取properties配置、eureka默认配置
         routesMap.putAll(super.locateRoutes());
-        logger.debug("初始默认的路由配置完成");
-        routesMap.putAll(locateRoutesFromDb());
+        routesMap.putAll(locateRoutesFromProperties());
         LinkedHashMap<String, ZuulProperties.ZuulRoute> values = new LinkedHashMap<>();
         for (Map.Entry<String, ZuulProperties.ZuulRoute> entry : routesMap.entrySet()) {
             String path = entry.getKey();
@@ -51,10 +49,10 @@ public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
         return values;
     }
 
-    private Map<String, ZuulProperties.ZuulRoute> locateRoutesFromDb() {
+    private Map<String, ZuulProperties.ZuulRoute> locateRoutesFromProperties() {
         Map<String, ZuulProperties.ZuulRoute> routes = new LinkedHashMap<>();
 
-        List<GataWayRoute> results = Arrays.asList(gataWayClientProperties.getClients());
+        List<GataWayRoute> results = gataWayClientProperties.getClients();
         for (GataWayRoute result : results) {
             if (StringUtils.isBlank(result.getPath()) && StringUtils.isBlank(result.getUrl())) {
                 continue;
@@ -79,7 +77,7 @@ public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
                 zuulRoute.setCustomSensitiveHeaders(true);
             }
 
-            logger.debug("自定义的路由配置,path：{}，serviceId:{}", zuulRoute.getPath(), zuulRoute.getServiceId());
+            logger.info("自定义的路由配置,path：{}，serviceId:{}", zuulRoute.getPath(), zuulRoute.getServiceId());
             routes.put(zuulRoute.getPath(), zuulRoute);
         }
         return routes;

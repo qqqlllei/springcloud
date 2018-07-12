@@ -13,6 +13,7 @@ zuul:
       enabled: true
       clients: auth-server,user-server
   ignoredServices: '*'
+
 management:
   security:
     enabled: false

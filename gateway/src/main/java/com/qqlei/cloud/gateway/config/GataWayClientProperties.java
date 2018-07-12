@@ -4,20 +4,22 @@ import com.qqlei.cloud.gateway.entity.GataWayRoute;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2018/7/11 0011.
  */
-@ConfigurationProperties(prefix = "zuul.client")
-@Component
+@ConfigurationProperties(prefix = "zuul")
 public class GataWayClientProperties {
 
-    private GataWayRoute[] clients = {};
+    private List<GataWayRoute> clients = new ArrayList<>();
 
-    public GataWayRoute[] getClients() {
+    public List<GataWayRoute> getClients() {
         return clients;
     }
 
-    public void setClients(GataWayRoute[] clients) {
+    public void setClients(List<GataWayRoute> clients) {
         this.clients = clients;
     }
 }
