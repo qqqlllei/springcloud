@@ -1,0 +1,22 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://10.33.80.101:7010/eureka/,http://10.33.80.101:7011/eureka/
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 3
+    lease-expiration-duration-in-seconds: 7
+
+
+spring:
+  cloud:
+    config:
+      username: config-server
+      password: 12345678
+      profile: ${spring.profiles.active}
+      label: master
+      discovery:
+        enabled: true
+        serviceId: config-server
+
