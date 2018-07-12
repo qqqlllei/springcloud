@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 public class UserWeb {
 
-    @RequestMapping(value = { "/user" }, produces = "application/json")
+    @RequestMapping(value = { "/checkToken" }, produces = "application/json")
     public Map<String, Object> user(OAuth2Authentication user) {
         Map<String, Object> userInfo = new HashMap<String, Object>();
         userInfo.put("user", user.getUserAuthentication().getPrincipal());

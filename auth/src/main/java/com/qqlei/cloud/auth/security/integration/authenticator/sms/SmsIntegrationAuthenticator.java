@@ -5,21 +5,17 @@ import com.qqlei.cloud.auth.security.integration.IntegrationAuthentication;
 import com.qqlei.cloud.auth.security.integration.authenticator.AbstractPreparableIntegrationAuthenticator;
 import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAuthenticator implements  ApplicationEventPublisherAware {
+public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAuthenticator {
 
     @Autowired
     private UserFegin userFegin;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    private ApplicationEventPublisher applicationEventPublisher;
 
     private final static String SMS_AUTH_TYPE = "sms";
 
@@ -28,14 +24,11 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
 
         String code = integrationAuthentication.getAuthParameter("password");
         String phone = integrationAuthentication.getUsername();
-        //发布事件，可以监听事件进行自动注册用户
-        this.applicationEventPublisher.publishEvent(new SmsAuthenticateBeforeEvent(integrationAuthentication));
+
         //通过手机号码查询用户
         SysUserAuthentication sysUserAuthentication = this.userFegin.findUserByPhoneNumber(phone);
         if (sysUserAuthentication != null) {
             sysUserAuthentication.setPassword(passwordEncoder.encode(code));
-            //发布事件，可以监听事件进行消息通知
-            this.applicationEventPublisher.publishEvent(new SmsAuthenticateSuccessEvent(integrationAuthentication));
         }
         return sysUserAuthentication;
     }
@@ -56,10 +49,5 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
     @Override
     public boolean support(IntegrationAuthentication integrationAuthentication) {
         return SMS_AUTH_TYPE.equals(integrationAuthentication.getAuthType());
-    }
-
-    @Override
-    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-        this.applicationEventPublisher = applicationEventPublisher;
     }
 }

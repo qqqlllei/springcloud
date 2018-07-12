@@ -11,11 +11,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-/**
- * The class Rest client details service.
- *
- * @author paascloud.net @gmail.com
- */
 @Component("propertiesClientDetailsService")
 public class PropertiesClientDetailsServiceImpl implements ClientDetailsService {
 
@@ -36,7 +31,7 @@ public class PropertiesClientDetailsServiceImpl implements ClientDetailsService 
 			for (OAuth2ClientProperties client : authClientProperties.getClients()) {
 				builder.withClient(client.getClientId())
 						.secret(client.getClientSecret())
-						.authorizedGrantTypes("refresh_token", "password", "client_credentials")
+						.authorizedGrantTypes("password")
 						.accessTokenValiditySeconds(client.getAccessTokenValidateSeconds())
 						.refreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds())
 						.scopes(client.getScope());

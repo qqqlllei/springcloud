@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2018/7/11 0011.
  */
-@ConfigurationProperties(prefix = "zuul")
+@ConfigurationProperties(prefix = "gataway")
 public class GataWayClientProperties {
 
     private List<GataWayRoute> clients = new ArrayList<>();

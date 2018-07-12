@@ -9,6 +9,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.cloud.netflix.zuul.filters.discovery.DiscoveryClientRouteLocator;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
@@ -77,9 +78,11 @@ public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
                 zuulRoute.setCustomSensitiveHeaders(true);
             }
 
-            logger.info("自定义的路由配置,path：{}，serviceId:{}", zuulRoute.getPath(), zuulRoute.getServiceId());
+
+
             routes.put(zuulRoute.getPath(), zuulRoute);
         }
+        logger.info("自定义的路由配置"+ routes.toString()+"time="+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()));
         return routes;
     }
 }
