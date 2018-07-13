@@ -17,6 +17,7 @@ zuul:
       enabled: true
       clients: auth-server,user-server
   ignoredServices: '*'
+  sensitive-headers: Cookie,Set-Cookie
 
 management:
   security:
@@ -28,7 +29,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 3000
+            timeoutInMilliseconds: 5000
 
 
 gataway:

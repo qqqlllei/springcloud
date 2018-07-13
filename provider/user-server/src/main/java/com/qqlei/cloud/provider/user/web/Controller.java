@@ -30,6 +30,7 @@ public class Controller {
         sysUserAuthentication.setName(name);
         sysUserAuthentication.setPassword(passwordEncoder.encode("123456"));
         sysUserAuthentication.setId(1L);
+        System.out.println("findUserByUsername");
         return sysUserAuthentication;
     }
 
