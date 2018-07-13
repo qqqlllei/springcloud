@@ -1,6 +1,6 @@
 package com.qqlei.cloud.provider.user.web;
 
-import com.qqlei.cloud.provider.user.security.vo.SysUserAuthentication;
+import com.qqlei.cloud.provider.user.vo.SysUserAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
