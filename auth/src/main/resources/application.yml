@@ -24,7 +24,7 @@ oauth:
     clients[0]:
       clientId: user
       clientSecret: userSecret
-      accessTokenValidateSeconds: 60
+      accessTokenValidateSeconds: 7200
       scope: "*"
     clients[1]:
       clientId: book

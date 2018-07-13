@@ -11,11 +11,19 @@ import java.util.Map;
 
 public class JWTTokenEnhancer implements TokenEnhancer {
 
+    private static String OPEN_ID="openId";
+
+    private static String CLIENT_ID="clientId";
+
+
+
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+        String clientId = authentication.getOAuth2Request().getClientId();
         Map<String, Object> additionalInfo = new HashMap<>();
         User user = (User) authentication.getPrincipal();
-        additionalInfo.put("openId", user.getId());
+        additionalInfo.put(OPEN_ID, user.getId());
+        additionalInfo.put(CLIENT_ID,clientId);
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
     }

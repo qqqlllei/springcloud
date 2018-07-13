@@ -26,6 +26,8 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 
 	private static String REQUEST_CLIENT_ID = "clientId";
 
+	private static String TOKEN_VALUE="tokenValue";
+
 	@Autowired
 	private ClientDetailsService clientDetailsService;
 
@@ -54,9 +56,12 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
 		OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
 		OAuth2AccessToken token =defaultTokenServices.createAccessToken(oAuth2Authentication);
+		String tokenValue =token.getValue();
 		token = jwtAccessTokenConverter.enhance(token,oAuth2Authentication);
 		String sessionKey = clientId+"_"+sysUserAuthentication.getId();
-		stringRedisTemplate.opsForValue().set(sessionKey,JSONObject.toJSONString(sysUserAuthentication),clientDetails.getAccessTokenValiditySeconds(), TimeUnit.SECONDS);
+		JSONObject jsonObject = (JSONObject) JSONObject.toJSON(sysUserAuthentication);
+		jsonObject.put(TOKEN_VALUE,tokenValue);
+		stringRedisTemplate.opsForValue().set(sessionKey,jsonObject.toJSONString(),clientDetails.getAccessTokenValiditySeconds(), TimeUnit.SECONDS);
 		response.setContentType("application/json;charset=UTF-8");
 		Map<String,String> result = new HashMap<>();
 		result.put("resultCode","0000");
