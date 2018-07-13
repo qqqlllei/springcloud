@@ -1,5 +1,6 @@
 package com.qqlei.cloud.auth.security;
 
+import com.qqlei.cloud.auth.security.integration.IntegrationAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,11 +46,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenEnhancer jwtTokenEnhancer;
 
+    @Autowired
+    private IntegrationAuthenticationFilter integrationAuthenticationFilter;
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.allowFormAuthenticationForClients()
                 .tokenKeyAccess("isAuthenticated()")
                 .checkTokenAccess("permitAll()");
+//                .addTokenEndpointAuthenticationFilter(integrationAuthenticationFilter);
     }
 
 
@@ -75,7 +80,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
         endpoints.tokenStore(tokenStore)
-                .accessTokenConverter(jwtAccessTokenConverter)
                 .tokenEnhancer(tokenEnhancerChain)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(integrationUserDetailsService);

@@ -12,6 +12,8 @@ public class AuthClientProperties {
 
     private String jwtSigningKey;
 
+    private String authServerClientId;
+
     private OAuth2ClientProperties[] clients = {};
 
     public OAuth2ClientProperties[] getClients() {
@@ -28,5 +30,13 @@ public class AuthClientProperties {
 
     public void setJwtSigningKey(String jwtSigningKey) {
         this.jwtSigningKey = jwtSigningKey;
+    }
+
+    public String getAuthServerClientId() {
+        return authServerClientId;
+    }
+
+    public void setAuthServerClientId(String authServerClientId) {
+        this.authServerClientId = authServerClientId;
     }
 }

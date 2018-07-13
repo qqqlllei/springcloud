@@ -20,7 +20,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class AuthSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private PcAuthenticationSuccessHandler pcAuthenticationSuccessHandler;
+    private AuthAuthenticationSuccessHandler authAuthenticationSuccessHandler;
+
+    @Autowired
+    private AuthAuthenticationFailureHandler authAuthenticationFailureHandler;
 
     @Autowired
     private IntegrationAuthenticationFilter integrationAuthenticationFilter;
@@ -31,7 +34,8 @@ public class AuthSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry =
                 http.formLogin()
                         .loginProcessingUrl("/authentication/form")
-                        .successHandler(pcAuthenticationSuccessHandler)
+                        .successHandler(authAuthenticationSuccessHandler)
+                        .failureHandler(authAuthenticationFailureHandler)
                         .and()
                         .authorizeRequests();
         registry.antMatchers("/authentication/**").permitAll();

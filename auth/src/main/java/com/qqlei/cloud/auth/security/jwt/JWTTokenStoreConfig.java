@@ -27,7 +27,8 @@ public class JWTTokenStoreConfig {
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
-        defaultTokenServices.setSupportRefreshToken(true);
+        defaultTokenServices.setTokenEnhancer(jwtTokenEnhancer());
+        defaultTokenServices.setSupportRefreshToken(false);
         return defaultTokenServices;
     }
 

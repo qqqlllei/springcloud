@@ -68,6 +68,7 @@ public class IntegrationAuthenticationFilter extends OncePerRequestFilter implem
 
     private void prepare(IntegrationAuthentication integrationAuthentication) {
 
+        //延迟加载认证器
         if(this.authenticators == null){
             synchronized (this){
                 Map<String,IntegrationAuthenticator> integrationAuthenticatorMap = applicationContext.getBeansOfType(IntegrationAuthenticator.class);
