@@ -9,13 +9,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -41,8 +38,8 @@ public class IntegrationAuthenticationFilter extends OncePerRequestFilter implem
 
     public IntegrationAuthenticationFilter(){
         this.requestMatcher = new OrRequestMatcher(
-                new AntPathRequestMatcher(OAUTH_TOKEN_URL, "GET"),
-                new AntPathRequestMatcher(OAUTH_TOKEN_URL, "POST"),
+                new AntPathRequestMatcher(OAUTH_TOKEN_URL, HttpMethod.GET.name()),
+                new AntPathRequestMatcher(OAUTH_TOKEN_URL, HttpMethod.POST.name()),
                 new AntPathRequestMatcher(COMMON_LOGIN_URL, HttpMethod.POST.name())
         );
     }
@@ -71,7 +68,6 @@ public class IntegrationAuthenticationFilter extends OncePerRequestFilter implem
 
     private void prepare(IntegrationAuthentication integrationAuthentication) {
 
-        //延迟加载认证器
         if(this.authenticators == null){
             synchronized (this){
                 Map<String,IntegrationAuthenticator> integrationAuthenticatorMap = applicationContext.getBeansOfType(IntegrationAuthenticator.class);
