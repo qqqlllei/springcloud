@@ -8,7 +8,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.*;
-import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -56,7 +55,8 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
 		OAuth2AccessToken token =defaultTokenServices.createAccessToken(oAuth2Authentication);
 		token = jwtAccessTokenConverter.enhance(token,oAuth2Authentication);
-		stringRedisTemplate.opsForValue().set(String.valueOf(sysUserAuthentication.getId()),JSONObject.toJSONString(token),clientDetails.getAccessTokenValiditySeconds(), TimeUnit.SECONDS);
+		String sessionKey = clientId+"_"+sysUserAuthentication.getId();
+		stringRedisTemplate.opsForValue().set(sessionKey,JSONObject.toJSONString(sysUserAuthentication),clientDetails.getAccessTokenValiditySeconds(), TimeUnit.SECONDS);
 		response.setContentType("application/json;charset=UTF-8");
 		Map<String,String> result = new HashMap<>();
 		result.put("resultCode","0000");

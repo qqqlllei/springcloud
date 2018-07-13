@@ -18,6 +18,15 @@ management:
   security:
     enabled: false
 
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+
+
 gataway:
   clients:
   - path: /user/**
