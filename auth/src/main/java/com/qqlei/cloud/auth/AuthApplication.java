@@ -16,8 +16,6 @@ import java.util.Map;
  */
 @SpringBootApplication
 @EnableEurekaClient
-@EnableAuthorizationServer
-@EnableResourceServer
 @EnableFeignClients
 public class AuthApplication {
 

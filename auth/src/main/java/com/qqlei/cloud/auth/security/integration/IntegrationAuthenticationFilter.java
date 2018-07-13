@@ -4,6 +4,7 @@ import com.qqlei.cloud.auth.security.integration.authenticator.IntegrationAuthen
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -30,6 +31,8 @@ public class IntegrationAuthenticationFilter extends OncePerRequestFilter implem
 
     private static final String OAUTH_TOKEN_URL = "/oauth/token";
 
+    private static final String COMMON_LOGIN_URL="/authentication/form";
+
     private Collection<IntegrationAuthenticator> authenticators;
 
     private ApplicationContext applicationContext;
@@ -39,7 +42,8 @@ public class IntegrationAuthenticationFilter extends OncePerRequestFilter implem
     public IntegrationAuthenticationFilter(){
         this.requestMatcher = new OrRequestMatcher(
                 new AntPathRequestMatcher(OAUTH_TOKEN_URL, "GET"),
-                new AntPathRequestMatcher(OAUTH_TOKEN_URL, "POST")
+                new AntPathRequestMatcher(OAUTH_TOKEN_URL, "POST"),
+                new AntPathRequestMatcher(COMMON_LOGIN_URL, HttpMethod.POST.name())
         );
     }
 
