@@ -2,6 +2,7 @@ package com.qqlei.cloud.gateway.fegin;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -11,6 +12,6 @@ import java.util.Map;
 @FeignClient("auth-server")
 public interface AuthFegin {
 
-    @RequestMapping(value = { "/checkToken" }, produces = "application/json")
-    Map<String, Object> checkToken();
+    @RequestMapping("/authentication/checkToken" )
+    Map<String, Object> checkToken(@RequestParam("token") String token);
 }

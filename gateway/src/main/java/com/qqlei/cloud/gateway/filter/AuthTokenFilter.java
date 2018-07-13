@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class AuthTokenFilter extends ZuulFilter {
 
-    private static final String AUTH_URI = "/auth";
     private static final String LOGOUT_URI = "/oauth/token";
     @Override
     public String filterType() {
@@ -38,12 +37,11 @@ public class AuthTokenFilter extends ZuulFilter {
         HttpServletRequest request = requestContext.getRequest();
         String requestURI = request.getRequestURI();
 
-        if (!requestURI.contains(AUTH_URI)) {
-            return null;
+        if (requestURI.contains(LOGOUT_URI)) {
+            String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            requestContext.addZuulRequestHeader(HttpHeaders.AUTHORIZATION, authHeader);
         }
 
-        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        requestContext.addZuulRequestHeader(HttpHeaders.AUTHORIZATION, authHeader);
 
         return null;
     }
