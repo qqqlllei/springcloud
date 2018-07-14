@@ -1,4 +1,4 @@
-package com.qqlei.cloud.gateway;
+package com.qqlei.cloud.gateway.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.netflix.zuul.context.RequestContext;

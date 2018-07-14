@@ -23,6 +23,7 @@ public class AuthAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
         response.setContentType("application/json;charset=UTF-8");
         Map<String,String> result = new HashMap<>();
         result.put("resultCode","1111");
+        result.put("resultMsg",exception.getMessage());
         response.getWriter().write(JSONObject.toJSONString(result));
     }
 }

@@ -1,7 +1,6 @@
-package com.qqlei.cloud.provider.user.interceptor;
+package com.qqlei.security.session;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.http.HttpHeaders;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,11 +12,15 @@ import javax.servlet.http.HttpServletResponse;
  * Created by 李雷 on 2018/7/13.
  */
 @Component
-public class UserSessionInterceptor implements HandlerInterceptor {
+public class LoginSessionInterceptor implements HandlerInterceptor {
+
+    private static String USER_SESSION="userSession";
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION), "Bearer ");
-        System.out.println("preHandle,token="+token);
+        String userSession = request.getHeader(USER_SESSION);
+        SysUserAuthentication userAuthentication =JSONObject.parseObject(userSession, SysUserAuthentication.class);
+        UserSessionContext.set(userAuthentication);
         return true;
     }
 
@@ -28,7 +31,6 @@ public class UserSessionInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-
-        System.out.println("afterCompletion");
+        UserSessionContext.clear();
     }
 }

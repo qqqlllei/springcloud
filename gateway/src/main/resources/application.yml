@@ -3,12 +3,15 @@ server:
 spring:
   application:
     name: gataway-server
+  http:
+    multipart:
+      location: g:/temp
 
   profiles:
     active: @profile-active@
 
   redis:
-    host: 10.33.80.101
+    host: 127.0.0.1
     port: 6379
 
 zuul:

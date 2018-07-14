@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Created by 李雷 on 2018/7/10.
  */
 @FeignClient("user-server")
+@RequestMapping("/userApi")
 public interface UserFegin {
     @RequestMapping(value="/findUserByUsername")
     SysUserAuthentication findUserByUsername(@RequestParam("name") String name);

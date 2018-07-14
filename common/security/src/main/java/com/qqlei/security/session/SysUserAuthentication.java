@@ -1,4 +1,4 @@
-package com.qqlei.cloud.provider.user.vo;
+package com.qqlei.security.session;
 
 
 import java.io.Serializable;

@@ -1,6 +1,7 @@
 package com.qqlei.cloud.provider.user.web;
 
-import com.qqlei.cloud.provider.user.vo.SysUserAuthentication;
+import com.qqlei.security.session.SysUserAuthentication;
+import com.qqlei.security.session.UserSessionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Administrator on 2018/4/14 0014.
  */
 @RestController
+@RequestMapping("/userApi")
 public class Controller {
 
     @Autowired
@@ -33,6 +35,8 @@ public class Controller {
         System.out.println("findUserByUsername");
         return sysUserAuthentication;
     }
+
+
 
     @RequestMapping(value="/findUserByPhoneNumber",method= RequestMethod.GET)
     SysUserAuthentication findUserByPhoneNumber(@RequestParam("phone") String phone){

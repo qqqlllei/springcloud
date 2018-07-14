@@ -3,7 +3,7 @@ package com.qqlei.cloud.gateway.filter;
 import com.alibaba.fastjson.JSONObject;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import com.qqlei.cloud.gateway.RestResponseUtil;
+import com.qqlei.cloud.gateway.util.RestResponseUtil;
 import com.qqlei.cloud.gateway.fegin.AuthFegin;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ public class PreRequestFilter extends ZuulFilter{
     private static String TOKEN_VALUE="tokenValue";
 
     private static String TOKEN_JTI="jti";
+
+    private static String USER_SESSION="userSession";
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -86,7 +88,7 @@ public class PreRequestFilter extends ZuulFilter{
             return null;
         }
 
-
+        requestContext.addZuulRequestHeader(USER_SESSION,userInfoString);
 
         return null;
     }
