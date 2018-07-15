@@ -21,21 +21,17 @@ zuul:
       clients: auth-server,user-server
   ignoredServices: '*'
   sensitive-headers: Cookie,Set-Cookie
+  ratelimit:
+    key-prefix: zuul-ratelimite
+    enabled: true
+    repository: redis
+    default-policy-list:
+      - limit: 2
+        quota: 5
+        refresh-interval: 5
+        type:
+          - user
 
-management:
-  security:
-    enabled: false
-
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 5000
-
-
-gataway:
   clients:
   - path: /user/**
     retryable: 1
@@ -55,6 +51,18 @@ gataway:
     serviceId: auth-server
     stripPrefix: 1
     url: ''
+
+management:
+  security:
+    enabled: false
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
 
 
 # 性能：API高可用，负载均衡，容错机制。
