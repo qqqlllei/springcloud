@@ -1,3 +1,8 @@
+
+spring:
+  application:
+    name: zipkin-server
+
 zipkin:
   collector:
     kafka:
@@ -12,3 +17,7 @@ zipkin:
       max-requests: 64
       index-shards: 5
       index-replicas: 1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/

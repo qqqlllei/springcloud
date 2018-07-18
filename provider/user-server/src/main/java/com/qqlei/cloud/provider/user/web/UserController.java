@@ -5,6 +5,7 @@ import com.qqlei.security.session.SysUserAuthentication;
 import com.qqlei.security.session.UserSessionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,9 +18,12 @@ public class UserController {
     private BookFegin bookFegin;
 
     @RequestMapping("/getCurrentSessionInfo")
-    SysUserAuthentication getCurrentSessionInfo(){
+    SysUserAuthentication getCurrentSessionInfo(@RequestParam("name") String name){
         SysUserAuthentication sysUserAuthentication =  UserSessionContext.get();
-        System.out.println(bookFegin.helloService(sysUserAuthentication.getName()));
+        if(sysUserAuthentication !=null){
+            name=sysUserAuthentication.getName();
+        }
+        System.out.println(bookFegin.helloService(name));
         return sysUserAuthentication;
     }
 }
