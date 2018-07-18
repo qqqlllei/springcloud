@@ -1,0 +1,14 @@
+zipkin:
+  collector:
+    kafka:
+      zookeeper: 10.33.80.101:2181
+
+  storage:
+    type: elasticsearch
+    elasticsearch:
+      hosts: 10.33.80.114:9200
+      cluster: elasticsearch
+      index: zipkin
+      max-requests: 64
+      index-shards: 5
+      index-replicas: 1
