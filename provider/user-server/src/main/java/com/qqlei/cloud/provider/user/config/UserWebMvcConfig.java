@@ -30,20 +30,4 @@ public class UserWebMvcConfig extends WebMvcConfigurerAdapter {
     public LoginSessionInterceptor loginSessionInterceptor(){
         return new LoginSessionInterceptor();
     }
-
-    @Bean
-    public RequestInterceptor headerInterceptor() {
-        return template -> {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            Enumeration<String> headerNames = request.getHeaderNames();
-            if (headerNames != null) {
-                while (headerNames.hasMoreElements()) {
-                    String name = headerNames.nextElement();
-                    String values = request.getHeader(name);
-                    template.header(name, values);
-                }
-            }
-        };
-    }
 }

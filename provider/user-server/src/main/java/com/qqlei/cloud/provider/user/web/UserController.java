@@ -18,12 +18,11 @@ public class UserController {
     private BookFegin bookFegin;
 
     @RequestMapping("/getCurrentSessionInfo")
-    SysUserAuthentication getCurrentSessionInfo(@RequestParam("name") String name){
+    String getCurrentSessionInfo(@RequestParam("name") String name){
         SysUserAuthentication sysUserAuthentication =  UserSessionContext.get();
         if(sysUserAuthentication !=null){
             name=sysUserAuthentication.getName();
         }
-        System.out.println(bookFegin.helloService(name));
-        return sysUserAuthentication;
+        return bookFegin.helloService(name);
     }
 }

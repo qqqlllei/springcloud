@@ -59,7 +59,4 @@ public class Controller {
         sysUserAuthentication.setId(1L);
         return sysUserAuthentication;
     }
-
-
-
 }

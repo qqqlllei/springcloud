@@ -1,6 +1,7 @@
 package com.qqlei.security.session;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,8 +20,10 @@ public class LoginSessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String userSession = request.getHeader(USER_SESSION);
-        SysUserAuthentication userAuthentication =JSONObject.parseObject(userSession, SysUserAuthentication.class);
-        UserSessionContext.set(userAuthentication);
+        if(StringUtils.isNotBlank(userSession)){
+            SysUserAuthentication userAuthentication =JSONObject.parseObject(userSession, SysUserAuthentication.class);
+            UserSessionContext.set(userAuthentication);
+        }
         return true;
     }
 

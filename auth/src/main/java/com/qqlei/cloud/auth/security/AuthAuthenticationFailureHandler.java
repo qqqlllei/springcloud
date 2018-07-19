@@ -19,7 +19,9 @@ import java.util.Map;
 @Component
 public class AuthAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request,
+                                        HttpServletResponse response, AuthenticationException exception)
+            throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
         Map<String,String> result = new HashMap<>();
         result.put("resultCode","1111");
