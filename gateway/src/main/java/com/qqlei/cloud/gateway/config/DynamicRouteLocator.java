@@ -82,7 +82,6 @@ public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
 
             routes.put(zuulRoute.getPath(), zuulRoute);
         }
-        logger.info("自定义的路由配置"+ routes.toString()+"time="+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()));
         return routes;
     }
 }
