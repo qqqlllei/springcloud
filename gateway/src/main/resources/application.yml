@@ -14,6 +14,17 @@ spring:
     host: 127.0.0.1
     port: 6379
 
+  zipkin:
+    kafka:
+      topic: zipkin
+
+  kafka:
+    bootstrap-servers: 10.33.80.101:9092
+
+  sleuth:
+    sampler:
+      percentage: 1.0
+
 zuul:
   ribbon:
     eager-load:
