@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by 李雷 on 2018/7/23.
  */
 @RestController
-@RequestMapping("/wechat")
+@RequestMapping("/authentication")
 public class WechatTokenController {
 
     private static final String WECHAT_APPID="wechatAppId";

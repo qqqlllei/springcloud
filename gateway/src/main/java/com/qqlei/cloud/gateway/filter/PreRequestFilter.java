@@ -24,6 +24,8 @@ public class PreRequestFilter extends ZuulFilter{
 
     private static final String LOGIN_URI = "/authentication/form";
 
+    private static final String WECHAT_CODE_URL = "/authentication/getWeiXinCodeUrl";
+
     private static String OPEN_ID="openId";
 
     private static String CLIENT_ID="clientId";
@@ -61,7 +63,7 @@ public class PreRequestFilter extends ZuulFilter{
         HttpServletRequest request = requestContext.getRequest();
         String requestURI = request.getRequestURI();
 
-        if (requestURI.contains(LOGIN_URI)) return null;
+        if (requestURI.contains(LOGIN_URI) || requestURI.contains(WECHAT_CODE_URL)) return null;
 
 
         String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION), "Bearer ");
