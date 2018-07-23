@@ -10,6 +10,12 @@ public class OAuth2ClientProperties {
     private int accessTokenValidateSeconds = 7200;
     private int refreshTokenValiditySeconds = 2592000;
     private String scope;
+    private String clientType;
+    private String wechatAppId;
+    private String wechatSecret;
+    private String wechatToken;
+    private String wechatAesKey;
+
 
     public String getClientId() {
         return clientId;
@@ -51,5 +57,43 @@ public class OAuth2ClientProperties {
         this.scope = scope;
     }
 
+    public String getClientType() {
+        return clientType;
+    }
 
+    public void setClientType(String clientType) {
+        this.clientType = clientType;
+    }
+
+    public String getWechatAppId() {
+        return wechatAppId;
+    }
+
+    public void setWechatAppId(String wechatAppId) {
+        this.wechatAppId = wechatAppId;
+    }
+
+    public String getWechatSecret() {
+        return wechatSecret;
+    }
+
+    public void setWechatSecret(String wechatSecret) {
+        this.wechatSecret = wechatSecret;
+    }
+
+    public String getWechatToken() {
+        return wechatToken;
+    }
+
+    public void setWechatToken(String wechatToken) {
+        this.wechatToken = wechatToken;
+    }
+
+    public String getWechatAesKey() {
+        return wechatAesKey;
+    }
+
+    public void setWechatAesKey(String wechatAesKey) {
+        this.wechatAesKey = wechatAesKey;
+    }
 }

@@ -37,6 +37,11 @@ oauth:
       clientSecret: userSecret
       accessTokenValidateSeconds: 7200
       scope: "*"
+      clientType: wechat
+      wechatAppId: wxa4ea35b0027a480d
+      wechatSecret: 5322490f4d2bf839ff57e07038e42eb3
+      wechatToken: qqlei
+      wechatAesKey:
     clients[1]:
       clientId: book
       clientSecret: bookSecret

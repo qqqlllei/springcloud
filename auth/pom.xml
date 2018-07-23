@@ -75,6 +75,13 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.6</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.qqlei.common</groupId>
+            <artifactId>security</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 

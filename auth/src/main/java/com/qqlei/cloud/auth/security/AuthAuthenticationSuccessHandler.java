@@ -34,10 +34,6 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 	@Autowired
 	private DefaultTokenServices defaultTokenServices;
 
-
-	@Autowired
-	private AuthClientProperties authClientProperties;
-
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 
@@ -52,7 +48,7 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		BeanUtils.copyProperties(authentication.getPrincipal(), sysUserAuthentication);
 		String clientId = request.getParameter(REQUEST_CLIENT_ID);
 		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
-		TokenRequest tokenRequest = new TokenRequest(null, authClientProperties.getAuthServerClientId(), clientDetails.getScope(), "custom");
+		TokenRequest tokenRequest = new TokenRequest(null, clientId, clientDetails.getScope(), "custom");
 		OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
 		OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
 		OAuth2AccessToken token =defaultTokenServices.createAccessToken(oAuth2Authentication);
