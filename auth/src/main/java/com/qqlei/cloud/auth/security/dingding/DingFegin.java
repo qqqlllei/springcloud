@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-import static com.qqlei.security.dingding.DingUrlConstant.*;
+import static com.qqlei.cloud.auth.security.dingding.DingUrlConstant.*;
 
 /**
  * Created by 李雷 on 2018/7/20.
