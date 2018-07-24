@@ -1,7 +1,7 @@
 package com.qqlei.cloud.auth.security.integration.authenticator.wechat;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qqlei.cloud.auth.fegin.UserFegin;
+import com.qqlei.cloud.auth.fegin.OutWechatFegin;
 import com.qqlei.cloud.auth.fegin.WechatFegin;
 import com.qqlei.cloud.auth.security.integration.IntegrationAuthentication;
 import com.qqlei.cloud.auth.security.integration.authenticator.IntegrationAuthenticator;
@@ -34,12 +34,12 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
 
     private static final String WECHAT_OPENID_PARAM_NAME="openid";
 
-    private static final String WECHAT_REQUEST_SUCCESS_FLAG="0";
-
     private static final String WECHAT_REQUEST_ERROR_FLAG="errcode";
 
+    private static final String OUT_WECHAT_CLIENT_ID_NAME="out-wechat";
+
     @Autowired
-    private UserFegin userFegin;
+    private OutWechatFegin outWechatFegin;
 
     @Autowired
     private WechatFegin wechatFegin;
@@ -55,7 +55,14 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
     public SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication) {
 
         String openId = integrationAuthentication.getUsername();
-        SysUserAuthentication sysUserAuthentication = userFegin.findUserByOpenId(openId);
+        String clientId = integrationAuthentication.getAuthParameter(WECHAT_CLIENT_ID_PARAM_NAME);
+
+        SysUserAuthentication sysUserAuthentication =null;
+
+        if(OUT_WECHAT_CLIENT_ID_NAME.equals(clientId)){
+            sysUserAuthentication = outWechatFegin.findUserByOpenId(openId);
+        }
+
         if (sysUserAuthentication != null) {
             sysUserAuthentication.setPassword(passwordEncoder.encode(openId));
         }

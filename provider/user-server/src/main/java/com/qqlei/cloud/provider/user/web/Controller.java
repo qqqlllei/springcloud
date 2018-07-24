@@ -52,9 +52,11 @@ public class Controller {
 
     @RequestMapping(value="/findUserByOpenId",method= RequestMethod.GET)
     SysUserAuthentication findUserByOpenId(@RequestParam("openId") String openId){
+
         SysUserAuthentication sysUserAuthentication = new SysUserAuthentication();
         sysUserAuthentication.setName("lilei");
         sysUserAuthentication.setPassword(passwordEncoder.encode(openId));
+        sysUserAuthentication.setStatus("1000");
         sysUserAuthentication.setId(1L);
         return sysUserAuthentication;
     }

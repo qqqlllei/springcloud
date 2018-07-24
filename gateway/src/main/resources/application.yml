@@ -62,6 +62,12 @@ zuul:
     serviceId: auth-server
     stripPrefix: 1
     url: ''
+  - path: /waiwei/**
+    retryable: 1
+    sensitiveHeadersList: ''
+    serviceId: out_wechat
+    stripPrefix: 1
+    url: ''
 
 management:
   security:

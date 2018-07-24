@@ -33,7 +33,7 @@ oauth:
   client:
     jwtSigningKey: jwtSigningKey
     clients[0]:
-      clientId: user
+      clientId: out-wechat
       clientSecret: userSecret
       accessTokenValidateSeconds: 7200
       scope: "*"
