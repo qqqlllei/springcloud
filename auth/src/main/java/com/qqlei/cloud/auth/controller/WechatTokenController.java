@@ -50,8 +50,6 @@ public class WechatTokenController {
     @RequestMapping(value = "/dingcalBack")
     public String dingcalBack(@RequestParam("code") String  code){
         String phone = dingTokenServer.getUserPhoneByAuthCode(code);
-
-        System.out.println("=================phone:"+phone);
         return phone;
     }
 
