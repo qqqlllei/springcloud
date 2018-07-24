@@ -27,7 +27,7 @@ eureka:
 security:
   oauth2:
     resource:
-      filter-order: 3  # 待确认
+      filter-order: 3
 
 oauth:
   client:
@@ -47,8 +47,3 @@ oauth:
       clientSecret: bookSecret
       accessTokenValidateSeconds: 7200
       scope: "*"
-
-
-
-#检查token
-#http://localhost:8888/oauth/check_token?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmdhbml6YXRpb25JZCI6ImxpbGVpOiIsInVzZXJfbmFtZSI6ImxpbGVpIiwic2NvcGUiOlsid2ViY2xpZW50Il0sImV4cCI6MTUzMTE1MDQ5NiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiJiMzlmZGVjMy1hZDdhLTRlYTUtOWYwOC02NDFmNjg0NWQ0YWIiLCJjbGllbnRfaWQiOiJhZG1pbiJ9.GybC5EQJVgwGioWAk8LibXaW4mgpIDkpFBfEwNIB3uU
