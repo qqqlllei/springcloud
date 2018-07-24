@@ -1,19 +1,31 @@
-package com.qqlei.security.dingding;
+package com.qqlei.cloud.auth.security.dingding;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by 李雷 on 2018/7/20.
  */
+@Service
 public class DingTokenServer {
 
     public static final String GET_TOKEN_SUCCESS="ok";
 
     public static final int TOKEN_TIME_OUT=110;
+
+    public static final String DING_DING_SNS_TOKEN_REDIS_NAME="ding_ding_sns_token_";
+
+    public static final String DING_DING_COM_TOKEN_REDIS_NAME="ding_ding_com_token_";
+
+    public static final String DING_DING_ERROR_MESSAGE_NAME="errmsg";
+
+    public static final String DING_DING_ACCESS_TOKEN_NAME="access_token";
 
 
     @Autowired
@@ -26,12 +38,12 @@ public class DingTokenServer {
     private DingDingProperties dingDingProperties;
 
     public String getSnsToken(){
-        String accessToken = stringRedisTemplate.opsForValue().get("ding_ding_sns_token_"+dingDingProperties.getAppid());
+        String accessToken = stringRedisTemplate.opsForValue().get(DING_DING_SNS_TOKEN_REDIS_NAME+dingDingProperties.getAppid());
         if(accessToken ==null){
             JSONObject result = dingFegin.getSnsToken(dingDingProperties.getAppid(),dingDingProperties.getAppsecret());
-            if(result.containsKey("errmsg") && GET_TOKEN_SUCCESS.equals(result.getString("errmsg"))){
-                accessToken= result.getString("access_token");
-                stringRedisTemplate.opsForValue().set("ding_ding_sns_token_"+dingDingProperties.getAppid(),accessToken,TOKEN_TIME_OUT, TimeUnit.MINUTES);
+            if(result.containsKey(DING_DING_ERROR_MESSAGE_NAME) && GET_TOKEN_SUCCESS.equals(result.getString(DING_DING_ERROR_MESSAGE_NAME))){
+                accessToken= result.getString(DING_DING_ACCESS_TOKEN_NAME);
+                stringRedisTemplate.opsForValue().set(DING_DING_SNS_TOKEN_REDIS_NAME+dingDingProperties.getAppid(),accessToken,TOKEN_TIME_OUT, TimeUnit.MINUTES);
             }
         }
 
@@ -41,17 +53,19 @@ public class DingTokenServer {
 
     public JSONObject getSnsPersistentCode(String authCode){
         String accessToken = getSnsToken();
-        return dingFegin.getSnsPersistentCode(accessToken,authCode);
+        JSONObject authCodeJson = new JSONObject();
+        authCodeJson.put("tmp_auth_code",authCode);
+        return dingFegin.getSnsPersistentCode(accessToken,authCodeJson.toString());
     }
 
 
     public String getComToken(){
-        String accessToken = stringRedisTemplate.opsForValue().get("ding_ding_com_token_"+dingDingProperties.getCorpid());
+        String accessToken = stringRedisTemplate.opsForValue().get(DING_DING_COM_TOKEN_REDIS_NAME+dingDingProperties.getCorpid());
         if(accessToken ==null){
             JSONObject result = dingFegin.getComToken(dingDingProperties.getCorpid(),dingDingProperties.getCorpsecret());
-            if(result.containsKey("errmsg") && GET_TOKEN_SUCCESS.equals(result.getString("errmsg"))){
-                accessToken= result.getString("access_token");
-                stringRedisTemplate.opsForValue().set("ding_ding_com_token_"+dingDingProperties.getCorpid(),accessToken,TOKEN_TIME_OUT, TimeUnit.MINUTES);
+            if(result.containsKey(DING_DING_ERROR_MESSAGE_NAME) && GET_TOKEN_SUCCESS.equals(result.getString(DING_DING_ERROR_MESSAGE_NAME))){
+                accessToken= result.getString(DING_DING_ACCESS_TOKEN_NAME);
+                stringRedisTemplate.opsForValue().set(DING_DING_COM_TOKEN_REDIS_NAME+dingDingProperties.getCorpid(),accessToken,TOKEN_TIME_OUT, TimeUnit.MINUTES);
             }
         }
 
@@ -61,7 +75,7 @@ public class DingTokenServer {
     public String getUserIdByUnionid(String unionid){
         String accessToken = getComToken();
         JSONObject result = dingFegin.getUseridByUnionid(accessToken,unionid);
-        if(result.containsKey("errmsg") && GET_TOKEN_SUCCESS.equals(result.getString("errmsg"))){
+        if(result.containsKey(DING_DING_ERROR_MESSAGE_NAME) && GET_TOKEN_SUCCESS.equals(result.getString(DING_DING_ERROR_MESSAGE_NAME))){
             return result.getString("userid");
 
         }

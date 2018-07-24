@@ -1,12 +1,14 @@
 package com.qqlei.cloud.auth.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qqlei.cloud.auth.security.dingding.DingTokenServer;
 import com.qqlei.security.wechat.WechatUrlHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -22,6 +24,9 @@ public class WechatTokenController {
 
     @Autowired
     private ClientDetailsService clientDetailsService;
+
+    @Autowired
+    private DingTokenServer dingTokenServer;
 
     @RequestMapping(value = "/getWeiXinCodeUrl/{clientId}")
     public String getWeiXinCodeUrl(@PathVariable("clientId") String  clientId){
@@ -40,5 +45,17 @@ public class WechatTokenController {
         result.put("end",end);
         return result.toJSONString();
     }
+
+
+    @RequestMapping(value = "/dingcalBack")
+    public String dingcalBack(@RequestParam("code") String  code){
+        String phone = dingTokenServer.getUserPhoneByAuthCode(code);
+
+        System.out.println("=================phone:"+phone);
+        return phone;
+    }
+
+
+
 
 }

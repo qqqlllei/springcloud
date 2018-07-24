@@ -1,11 +1,13 @@
-package com.qqlei.security.dingding;
+package com.qqlei.cloud.auth.security.dingding;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by 李雷 on 2018/7/20.
  */
 @ConfigurationProperties(prefix = "ding")
+@Component
 public class DingDingProperties {
 
 

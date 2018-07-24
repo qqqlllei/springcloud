@@ -47,3 +47,10 @@ oauth:
       clientSecret: bookSecret
       accessTokenValidateSeconds: 7200
       scope: "*"
+
+
+ding:
+  appid: dingoanvwzywxpqf7wh02u
+  appsecret: 6kwRXPawkcZ91ouHALBSurtqV8lBXoXPyd9dWl0e9X0piWPoNgrirv42_4vdtmrU
+  corpid: ding951c64ba07e7e73835c2f4657eb6378f
+  corpsecret: VYWz1onq3S_7eAOadFYPyZ-mtA0238XjsdXMoqu97AOX1ykIbdClfA5k5nmNkJvZ
