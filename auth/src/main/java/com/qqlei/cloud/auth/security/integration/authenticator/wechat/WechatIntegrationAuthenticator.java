@@ -7,6 +7,7 @@ import com.qqlei.cloud.auth.security.integration.IntegrationAuthentication;
 import com.qqlei.cloud.auth.security.integration.authenticator.IntegrationAuthenticator;
 import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
@@ -31,7 +32,7 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
 
     private static final String OAUTH2_GET_ACCESS_TOKEN_GRANT_TYPE="authorization_code";
 
-    private static final String WECHAT_OPENID_PARAM_NAME="openId";
+    private static final String WECHAT_OPENID_PARAM_NAME="openid";
 
     private static final String WECHAT_REQUEST_SUCCESS_FLAG="0";
 
@@ -46,6 +47,8 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
     @Autowired
     private ClientDetailsService clientDetailsService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -53,6 +56,9 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
 
         String openId = integrationAuthentication.getUsername();
         SysUserAuthentication sysUserAuthentication = userFegin.findUserByOpenId(openId);
+        if (sysUserAuthentication != null) {
+            sysUserAuthentication.setPassword(passwordEncoder.encode(openId));
+        }
         return sysUserAuthentication;
     }
 

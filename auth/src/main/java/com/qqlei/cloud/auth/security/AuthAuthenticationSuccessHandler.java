@@ -61,8 +61,8 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		response.setContentType("application/json;charset=UTF-8");
 		Map<String,String> result = new HashMap<>();
 		result.put("resultCode","0000");
-		result.put("access_token",token.getValue());
-		response.getWriter().write(JSONObject.toJSONString(token));
+		result.put("appToken",token.getValue());
+		response.getWriter().write(JSONObject.toJSONString(result));
 
 
 

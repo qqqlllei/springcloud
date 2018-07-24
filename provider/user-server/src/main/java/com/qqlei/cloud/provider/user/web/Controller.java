@@ -54,8 +54,7 @@ public class Controller {
     SysUserAuthentication findUserByOpenId(@RequestParam("openId") String openId){
         SysUserAuthentication sysUserAuthentication = new SysUserAuthentication();
         sysUserAuthentication.setName("lilei");
-        sysUserAuthentication.setUsername(openId);
-        sysUserAuthentication.setPassword(passwordEncoder.encode("123456"));
+        sysUserAuthentication.setPassword(passwordEncoder.encode(openId));
         sysUserAuthentication.setId(1L);
         return sysUserAuthentication;
     }
