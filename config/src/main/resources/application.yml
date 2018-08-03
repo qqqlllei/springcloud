@@ -1,0 +1,28 @@
+logging:
+  config: classpath:logback.xml
+server:
+  port: 7000
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        default-application-name: config-server
+        git:
+          uri: http://10.33.80.121/lilei/config.git
+          username: config-server
+          password: 12345678
+          search-paths: '{application}'
+          force-pull: true
+
+
+management:
+  security:
+    enabled: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    hostname: 10.33.80.101

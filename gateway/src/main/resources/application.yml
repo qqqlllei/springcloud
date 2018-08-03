@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8080
 spring:
   application:
     name: gataway-server
@@ -11,7 +11,7 @@ spring:
     active: @profile-active@
 
   redis:
-    host: 127.0.0.1
+    host: 10.33.80.101
     port: 6379
 
   zipkin:
