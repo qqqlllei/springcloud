@@ -20,7 +20,7 @@ eureka:
 #      defaultZone: ${ADDITIONAL_EUREKA_SERVER_LIST}
 
 
-docker-compose
+#docker-compose
 #eureka:
 #  image: reg.zhongjiaxin.com/system/eureka-server:latest
 #  container_name: eureka
