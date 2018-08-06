@@ -28,6 +28,10 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 
 	private static String TOKEN_VALUE="tokenValue";
 
+	private static final String AUTH_TYPE_PARM_NAME = "auth_type";
+
+	private final static String WECHAT_AUTH_TYPE = "wechat";
+
 	@Autowired
 	private ClientDetailsService clientDetailsService;
 
@@ -54,7 +58,12 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		OAuth2AccessToken token =defaultTokenServices.createAccessToken(oAuth2Authentication);
 		String tokenValue =token.getValue();
 		token = jwtAccessTokenConverter.enhance(token,oAuth2Authentication);
-		String sessionKey = clientId+"_"+sysUserAuthentication.getId();
+		String id=String.valueOf(sysUserAuthentication.getId());
+		String authType = request.getParameter(AUTH_TYPE_PARM_NAME);
+		if(WECHAT_AUTH_TYPE.equals(authType)){
+			id=sysUserAuthentication.getOpenid();
+		}
+		String sessionKey = clientId+"_"+id;
 		JSONObject jsonObject = (JSONObject) JSONObject.toJSON(sysUserAuthentication);
 		jsonObject.put(TOKEN_VALUE,tokenValue);
 		stringRedisTemplate.opsForValue().set(sessionKey,jsonObject.toJSONString(),clientDetails.getAccessTokenValiditySeconds(), TimeUnit.SECONDS);

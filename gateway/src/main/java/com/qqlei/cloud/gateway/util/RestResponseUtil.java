@@ -30,7 +30,7 @@ public class RestResponseUtil {
         Map<String,String> result = new HashMap<>();
         result.put("resultCode",resultCode);
         result.put("resultMsg",resultMsg);
-        requestContext.setResponseBody(JSONObject.toJSONString(ResponseEntity.ok(result)));
+        requestContext.setResponseBody(JSONObject.toJSONString(result));
     }
 
     public static void noTokenResponse(RequestContext requestContext){

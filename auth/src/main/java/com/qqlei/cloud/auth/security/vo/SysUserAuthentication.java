@@ -21,6 +21,8 @@ public class SysUserAuthentication implements Serializable {
 
     private String type;
 
+    private String openid;
+
     public Long getId() {
         return id;
     }
@@ -85,5 +87,11 @@ public class SysUserAuthentication implements Serializable {
         this.type = type;
     }
 
+    public String getOpenid() {
+        return openid;
+    }
 
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
 }

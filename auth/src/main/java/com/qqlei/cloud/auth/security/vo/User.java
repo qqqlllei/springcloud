@@ -28,6 +28,7 @@ public class User implements UserDetails, CredentialsContainer {
     private Collection<String> roles = new ArrayList<String>();
     private Collection<GrantedAuthority> grantedAuthorities;
     private Long tenantId;
+    private String openId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -150,5 +151,13 @@ public class User implements UserDetails, CredentialsContainer {
     @Override
     public void eraseCredentials() {
         this.password = null;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }
