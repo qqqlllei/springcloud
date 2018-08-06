@@ -1,6 +1,8 @@
 package com.qqlei.cloud.auth.security.integration.authenticator.wechat;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qqlei.cloud.auth.exception.BusinessException;
+import com.qqlei.cloud.auth.exception.ExceptionCodeEnum;
 import com.qqlei.cloud.auth.fegin.OutWechatFegin;
 import com.qqlei.cloud.auth.fegin.WechatFegin;
 import com.qqlei.cloud.auth.security.integration.IntegrationAuthentication;
@@ -24,6 +26,7 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
     private final static String WECHAT_AUTH_TYPE = "wechat";
 
     private final static String WECHAT_LOGIN_CODE_PARAM_NAME="code";
+    private final static String WECHAT_LOGIN_PASSWORD_PARAM_NAME="password";
     private final static String WECHAT_CLIENT_ID_PARAM_NAME="clientId";
 
     private static final String WECHAT_APPID_PARAM_NAME="wechatAppId";
@@ -57,6 +60,8 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
         String openId = integrationAuthentication.getUsername();
         String clientId = integrationAuthentication.getAuthParameter(WECHAT_CLIENT_ID_PARAM_NAME);
 
+        String password = integrationAuthentication.getAuthParameter(WECHAT_LOGIN_PASSWORD_PARAM_NAME);
+
         SysUserAuthentication sysUserAuthentication =null;
 
         if(OUT_WECHAT_CLIENT_ID_NAME.equals(clientId)){
@@ -64,20 +69,21 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
         }
 
         if (sysUserAuthentication != null) {
-            sysUserAuthentication.setPassword(passwordEncoder.encode(openId));
+            sysUserAuthentication.setPassword(passwordEncoder.encode(password));
         }
+
         return sysUserAuthentication;
     }
 
     @Override
     public void prepare(IntegrationAuthentication integrationAuthentication) {
-        String code = integrationAuthentication.getAuthParameter(WECHAT_LOGIN_CODE_PARAM_NAME);
+        String password = integrationAuthentication.getAuthParameter(WECHAT_LOGIN_PASSWORD_PARAM_NAME);
         String clientId = integrationAuthentication.getAuthParameter(WECHAT_CLIENT_ID_PARAM_NAME);
         ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
         Map<String,Object> additionalInformation =  clientDetails.getAdditionalInformation();
         String oAuth2AccessToken = wechatFegin.oauth2getAccessToken(String.valueOf(additionalInformation.get(WECHAT_APPID_PARAM_NAME)),
                 String.valueOf(additionalInformation.get(WECHAT_SECRET_PARAM_NAME)),
-                code,
+                password,
                 OAUTH2_GET_ACCESS_TOKEN_GRANT_TYPE);
         JSONObject wechatResponse = JSONObject.parseObject(oAuth2AccessToken);
         if(wechatResponse.containsKey(WECHAT_REQUEST_ERROR_FLAG)){
@@ -86,6 +92,7 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
 
         String openId =  wechatResponse.getString(WECHAT_OPENID_PARAM_NAME);
         integrationAuthentication.setUsername(openId);
+
     }
 
     @Override

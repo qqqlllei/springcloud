@@ -65,7 +65,7 @@ zuul:
   - path: /waiwei/**
     retryable: 1
     sensitiveHeadersList: ''
-    serviceId: out_wechat
+    serviceId: out-wechat
     stripPrefix: 1
     url: ''
 

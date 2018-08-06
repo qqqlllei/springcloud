@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +19,18 @@ import java.util.Map;
  */
 @Component
 public class AuthAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response, AuthenticationException exception)
             throws IOException, ServletException {
+
         response.setContentType("application/json;charset=UTF-8");
         Map<String,String> result = new HashMap<>();
-        result.put("resultCode","1111");
-        result.put("resultMsg",exception.getMessage());
+        result.put("resultCode","1000");
+        result.put("resultMsg","123");
+        response.setStatus(200);
         response.getWriter().write(JSONObject.toJSONString(result));
     }
+
 }

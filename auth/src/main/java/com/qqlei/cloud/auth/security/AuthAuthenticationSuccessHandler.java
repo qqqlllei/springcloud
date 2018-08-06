@@ -60,15 +60,9 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		stringRedisTemplate.opsForValue().set(sessionKey,jsonObject.toJSONString(),clientDetails.getAccessTokenValiditySeconds(), TimeUnit.SECONDS);
 		response.setContentType("application/json;charset=UTF-8");
 		Map<String,String> result = new HashMap<>();
-		result.put("resultCode","0000");
-		if(sysUserAuthentication.getStatus().equals("1000")){
-			result.put("resultCode","0000");
-		}
+		result.put("resultCode",sysUserAuthentication.getStatus());
 		result.put("appToken",token.getValue());
 		response.getWriter().write(JSONObject.toJSONString(result));
-
-
-
 	}
 
 }

@@ -5,6 +5,7 @@ import com.qqlei.cloud.auth.security.integration.IntegrationAuthenticationContex
 import com.qqlei.cloud.auth.security.integration.authenticator.IntegrationAuthenticator;
 import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
 import com.qqlei.cloud.auth.security.vo.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,7 +33,11 @@ public class IntegrationUserDetailsService implements UserDetailsService {
         if (integrationAuthentication == null) {
             integrationAuthentication = new IntegrationAuthentication();
         }
-        integrationAuthentication.setUsername(username);
+
+        if(StringUtils.isBlank(integrationAuthentication.getUsername())){
+            integrationAuthentication.setUsername(username);
+        }
+
         SysUserAuthentication sysUserAuthentication = this.authenticate(integrationAuthentication);
 
         if(sysUserAuthentication == null){
