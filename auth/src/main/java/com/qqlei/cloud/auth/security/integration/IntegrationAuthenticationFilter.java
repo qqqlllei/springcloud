@@ -1,5 +1,6 @@
 package com.qqlei.cloud.auth.security.integration;
 
+import com.qqlei.cloud.auth.security.constants.SecurityConstant;
 import com.qqlei.cloud.auth.security.integration.authenticator.IntegrationAuthenticator;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -24,11 +25,7 @@ import java.util.Map;
 @Component
 public class IntegrationAuthenticationFilter extends OncePerRequestFilter implements ApplicationContextAware {
 
-    private static final String AUTH_TYPE_PARM_NAME = "auth_type";
 
-    private static final String OAUTH_TOKEN_URL = "/oauth/token";
-
-    private static final String COMMON_LOGIN_URL="/authentication/form";
 
     private Collection<IntegrationAuthenticator> authenticators;
 
@@ -38,9 +35,9 @@ public class IntegrationAuthenticationFilter extends OncePerRequestFilter implem
 
     public IntegrationAuthenticationFilter(){
         this.requestMatcher = new OrRequestMatcher(
-                new AntPathRequestMatcher(OAUTH_TOKEN_URL, HttpMethod.GET.name()),
-                new AntPathRequestMatcher(OAUTH_TOKEN_URL, HttpMethod.POST.name()),
-                new AntPathRequestMatcher(COMMON_LOGIN_URL, HttpMethod.POST.name())
+                new AntPathRequestMatcher(SecurityConstant.OAUTH_TOKEN_URL, HttpMethod.GET.name()),
+                new AntPathRequestMatcher(SecurityConstant.OAUTH_TOKEN_URL, HttpMethod.POST.name()),
+                new AntPathRequestMatcher(SecurityConstant.COMMON_LOGIN_URL, HttpMethod.POST.name())
         );
     }
 
@@ -48,7 +45,7 @@ public class IntegrationAuthenticationFilter extends OncePerRequestFilter implem
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if(requestMatcher.matches(request)){
             IntegrationAuthentication integrationAuthentication = new IntegrationAuthentication();
-            integrationAuthentication.setAuthType(request.getParameter(AUTH_TYPE_PARM_NAME));
+            integrationAuthentication.setAuthType(request.getParameter(SecurityConstant.AUTH_TYPE_PARM_NAME));
             integrationAuthentication.setAuthParameters(request.getParameterMap());
             IntegrationAuthenticationContext.set(integrationAuthentication);
             try{

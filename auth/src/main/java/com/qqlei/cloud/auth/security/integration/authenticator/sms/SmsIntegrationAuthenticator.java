@@ -1,6 +1,7 @@
 package com.qqlei.cloud.auth.security.integration.authenticator.sms;
 
 import com.qqlei.cloud.auth.fegin.UserFegin;
+import com.qqlei.cloud.auth.security.constants.SecurityConstant;
 import com.qqlei.cloud.auth.security.integration.IntegrationAuthentication;
 import com.qqlei.cloud.auth.security.integration.authenticator.AbstractPreparableIntegrationAuthenticator;
 import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
@@ -17,7 +18,7 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final static String SMS_AUTH_TYPE = "sms";
+
 
     @Override
     public SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication) {
@@ -48,6 +49,6 @@ public class SmsIntegrationAuthenticator extends AbstractPreparableIntegrationAu
 
     @Override
     public boolean support(IntegrationAuthentication integrationAuthentication) {
-        return SMS_AUTH_TYPE.equals(integrationAuthentication.getAuthType());
+        return SecurityConstant.SMS_AUTH_TYPE.equals(integrationAuthentication.getAuthType());
     }
 }

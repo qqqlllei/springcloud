@@ -1,6 +1,7 @@
 package com.qqlei.cloud.auth.security;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qqlei.cloud.auth.security.constants.SecurityConstant;
 import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-	private static String REQUEST_CLIENT_ID = "clientId";
 
-	private static String TOKEN_VALUE="tokenValue";
-
-	private static final String AUTH_TYPE_PARM_NAME = "auth_type";
-
-	private final static String WECHAT_AUTH_TYPE = "wechat";
 
 	@Autowired
 	private ClientDetailsService clientDetailsService;
@@ -50,7 +45,7 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 
 		SysUserAuthentication sysUserAuthentication = new SysUserAuthentication();
 		BeanUtils.copyProperties(authentication.getPrincipal(), sysUserAuthentication);
-		String clientId = request.getParameter(REQUEST_CLIENT_ID);
+		String clientId = request.getParameter(SecurityConstant.REQUEST_CLIENT_ID);
 		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
 		TokenRequest tokenRequest = new TokenRequest(null, clientId, clientDetails.getScope(), "custom");
 		OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
@@ -62,7 +57,7 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		token = jwtAccessTokenConverter.enhance(token,oAuth2Authentication);
 		String sessionKey = clientId+"_"+sysUserAuthentication.getId();
 		JSONObject jsonObject = (JSONObject) JSONObject.toJSON(sysUserAuthentication);
-		jsonObject.put(TOKEN_VALUE,tokenValue);
+		jsonObject.put(SecurityConstant.TOKEN_VALUE,tokenValue);
 		stringRedisTemplate.opsForValue().set(sessionKey,jsonObject.toJSONString(),clientDetails.getAccessTokenValiditySeconds(), TimeUnit.SECONDS);
 		response.setContentType("application/json;charset=UTF-8");
 		Map<String,String> result = new HashMap<>();
