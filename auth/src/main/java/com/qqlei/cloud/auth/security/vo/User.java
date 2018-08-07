@@ -10,25 +10,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-/**
- * @author LIQIU
- * @date 2018-3-8
- **/
 public class User implements UserDetails, CredentialsContainer {
 
-    private Long id;
+    private String id;
     private String username;
     private String password;
     private String status;
     private String type;
-    private String phoneNumber;
+    private String mobile;
     private String email;
     private String name;
+    private String certNo;
     private Collection<String> resources = new ArrayList<String>();
     private Collection<String> roles = new ArrayList<String>();
     private Collection<GrantedAuthority> grantedAuthorities;
     private Long tenantId;
-    private String openId;
+    private String openid;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -84,14 +81,6 @@ public class User implements UserDetails, CredentialsContainer {
         this.status = status;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getTenantId() {
         return tenantId;
     }
@@ -124,14 +113,6 @@ public class User implements UserDetails, CredentialsContainer {
         this.type = type;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -153,11 +134,35 @@ public class User implements UserDetails, CredentialsContainer {
         this.password = null;
     }
 
-    public String getOpenId() {
-        return openId;
+    public String getOpenid() {
+        return openid;
     }
 
-    public void setOpenId(String openId) {
-        this.openId = openId;
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getCertNo() {
+        return certNo;
+    }
+
+    public void setCertNo(String certNo) {
+        this.certNo = certNo;
     }
 }

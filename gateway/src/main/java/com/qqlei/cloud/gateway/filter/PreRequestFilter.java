@@ -12,6 +12,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
@@ -91,8 +93,13 @@ public class PreRequestFilter extends ZuulFilter{
             RestResponseUtil.tokenInvalidResponse(requestContext);
             return null;
         }
+        try {
+            userInfoString =  URLEncoder.encode(userInfoString, "UTF-8");
+            requestContext.addZuulRequestHeader(USER_SESSION, userInfoString);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        requestContext.addZuulRequestHeader(USER_SESSION,userInfoString);
 
         return null;
     }

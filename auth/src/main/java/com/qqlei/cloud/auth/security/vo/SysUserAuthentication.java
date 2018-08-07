@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class SysUserAuthentication implements Serializable {
 
-    private Long id;
+    private String id;
 
     private String username;
 
@@ -13,7 +13,7 @@ public class SysUserAuthentication implements Serializable {
 
     private String email;
 
-    private String phoneNumber;
+    private String mobile;
 
     private String status;
 
@@ -22,14 +22,7 @@ public class SysUserAuthentication implements Serializable {
     private String type;
 
     private String openid;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String certNo;
 
     public String getUsername() {
         return username;
@@ -53,14 +46,6 @@ public class SysUserAuthentication implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getStatus() {
@@ -93,5 +78,29 @@ public class SysUserAuthentication implements Serializable {
 
     public void setOpenid(String openid) {
         this.openid = openid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getCertNo() {
+        return certNo;
+    }
+
+    public void setCertNo(String certNo) {
+        this.certNo = certNo;
     }
 }

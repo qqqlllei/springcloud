@@ -56,14 +56,11 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
 		OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
 		OAuth2AccessToken token =defaultTokenServices.createAccessToken(oAuth2Authentication);
+		Map<String, Object> additionalInformation = token.getAdditionalInformation();
+		additionalInformation.put("id",sysUserAuthentication.getId());
 		String tokenValue =token.getValue();
 		token = jwtAccessTokenConverter.enhance(token,oAuth2Authentication);
-		String id=String.valueOf(sysUserAuthentication.getId());
-		String authType = request.getParameter(AUTH_TYPE_PARM_NAME);
-		if(WECHAT_AUTH_TYPE.equals(authType)){
-			id=sysUserAuthentication.getOpenid();
-		}
-		String sessionKey = clientId+"_"+id;
+		String sessionKey = clientId+"_"+sysUserAuthentication.getId();
 		JSONObject jsonObject = (JSONObject) JSONObject.toJSON(sysUserAuthentication);
 		jsonObject.put(TOKEN_VALUE,tokenValue);
 		stringRedisTemplate.opsForValue().set(sessionKey,jsonObject.toJSONString(),clientDetails.getAccessTokenValiditySeconds(), TimeUnit.SECONDS);
