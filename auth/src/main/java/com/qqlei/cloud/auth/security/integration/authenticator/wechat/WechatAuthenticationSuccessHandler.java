@@ -39,10 +39,11 @@ public class WechatAuthenticationSuccessHandler implements AuthSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication,OAuth2AccessToken token,OAuth2Authentication oAuth2Authentication,
                                         SysUserAuthentication sysUserAuthentication,ClientDetails clientDetails) throws ServletException, IOException {
-
+        Map<String,Object> tokenAdditionalInformation = token.getAdditionalInformation();
+        String sessionKey = clientDetails.getClientId()+"_"+sysUserAuthentication.getOpenid();
+        tokenAdditionalInformation.put(SecurityConstant.AUTH_SESSION_KEY,sessionKey);
         String tokenValue =token.getValue();
         token = jwtAccessTokenConverter.enhance(token,oAuth2Authentication);
-        String sessionKey = clientDetails.getClientId()+"_"+sysUserAuthentication.getOpenid();
         JSONObject jsonObject = (JSONObject) JSONObject.toJSON(sysUserAuthentication);
         jsonObject.put(SecurityConstant.TOKEN_VALUE,tokenValue);
         stringRedisTemplate.opsForValue().set(sessionKey,jsonObject.toJSONString(),clientDetails.getAccessTokenValiditySeconds(), TimeUnit.SECONDS);

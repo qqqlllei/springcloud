@@ -30,15 +30,13 @@ public class PreRequestFilter extends ZuulFilter{
 
     private static final String DING_CODE_URL = "/authentication/dingcalBack";
 
-    private static String OPEN_ID="openId";
-
-    private static String CLIENT_ID="clientId";
-
     private static String TOKEN_VALUE="tokenValue";
 
     private static String TOKEN_JTI="jti";
 
     private static String USER_SESSION="userSession";
+
+    private static final String AUTH_SESSION_KEY="sessionKey";
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -78,7 +76,7 @@ public class PreRequestFilter extends ZuulFilter{
         }
 
         Map<String, Object> authMap =  authFegin.checkToken(token);
-        String key = authMap.get(CLIENT_ID)+"_"+authMap.get(OPEN_ID);
+        String key = String.valueOf(authMap.get(AUTH_SESSION_KEY));
         String tokenValue = (String) authMap.get(TOKEN_JTI);
 
         String userInfoString = stringRedisTemplate.opsForValue().get(key);

@@ -48,6 +48,8 @@ public class SecurityConstant {
 
     public static final String TOKEN_VALUE="tokenValue";
 
+    public static final String AUTH_SESSION_KEY = "sessionKey";
+
     public static final String AUTH_SUCCESS_HANDLER="authSuccessHandler";
 
     public static final String AUTH_FAILURE_HANDLER="authFailureHandler";
