@@ -42,6 +42,8 @@ oauth:
       wechatSecret: 5322490f4d2bf839ff57e07038e42eb3
       wechatToken: qqlei
       wechatAesKey:
+      authSuccessHandler: wechatAuthenticationSuccessHandler
+      authFailureHandler: wechatAuthenticationFailureHandler
     clients[1]:
       clientId: book
       clientSecret: bookSecret

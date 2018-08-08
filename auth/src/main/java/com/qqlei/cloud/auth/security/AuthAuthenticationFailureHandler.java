@@ -1,8 +1,15 @@
 package com.qqlei.cloud.auth.security;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qqlei.cloud.auth.security.constants.SecurityConstant;
+import com.qqlei.cloud.auth.security.integration.AuthFailureHandler;
+import com.qqlei.cloud.auth.security.integration.AuthSuccessHandler;
+import com.qqlei.cloud.auth.util.ApplicationContextHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -20,17 +27,22 @@ import java.util.Map;
 @Component
 public class AuthAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
+
+    @Autowired
+    private ClientDetailsService clientDetailsService;
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response, AuthenticationException exception)
             throws IOException, ServletException {
 
-        response.setContentType("application/json;charset=UTF-8");
-        Map<String,String> result = new HashMap<>();
-        result.put("resultCode","1000");
-        result.put("resultMsg","123");
-        response.setStatus(200);
-        response.getWriter().write(JSONObject.toJSONString(result));
+
+        String clientId = request.getParameter(SecurityConstant.REQUEST_CLIENT_ID);
+        ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
+        Map<String, Object> additionalInformation = clientDetails.getAdditionalInformation();
+        String authFailureHandlerBeanName =String.valueOf(additionalInformation.get(SecurityConstant.AUTH_FAILURE_HANDLER));
+        AuthFailureHandler authenticationFailureHandler =  ApplicationContextHelper.getBean(authFailureHandlerBeanName,AuthFailureHandler.class);
+        authenticationFailureHandler.onAuthenticationFailure(request,response,exception);
     }
 
 }
