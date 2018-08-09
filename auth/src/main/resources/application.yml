@@ -34,7 +34,7 @@ oauth:
     jwtSigningKey: jwtSigningKey
     clients[0]:
       clientId: out-wechat
-      clientSecret: userSecret
+      clientSecret: outSecret
       accessTokenValidateSeconds: 7200
       scope: "*"
       clientType: wechat
@@ -45,8 +45,8 @@ oauth:
       authSuccessHandler: wechatAuthenticationSuccessHandler
       authFailureHandler: wechatAuthenticationFailureHandler
     clients[1]:
-      clientId: book
-      clientSecret: bookSecret
+      clientId: collection-server
+      clientSecret: collectionSecret
       accessTokenValidateSeconds: 7200
       scope: "*"
 

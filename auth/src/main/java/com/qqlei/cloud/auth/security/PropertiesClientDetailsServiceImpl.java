@@ -1,6 +1,7 @@
 package com.qqlei.cloud.auth.security;
 
 import com.qqlei.cloud.auth.security.constants.SecurityConstant;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,18 @@ public class PropertiesClientDetailsServiceImpl implements ClientDetailsService 
 					additionalInformation.put(SecurityConstant.WECHAT_AES_KEY_PARAM_NAME,client.getWechatAesKey());
 				}
 
-				additionalInformation.put(SecurityConstant.AUTH_SUCCESS_HANDLER,client.getAuthSuccessHandler());
-				additionalInformation.put(SecurityConstant.AUTH_FAILURE_HANDLER,client.getAuthFailureHandler());
+				//add default handler
+				additionalInformation.put(SecurityConstant.AUTH_DEFAULT_SUCCESS_HANDLER,SecurityConstant.AUTH_DEFAULT_SUCCESS_HANDLER);
+				additionalInformation.put(SecurityConstant.AUTH_DEFAULT_FAILURE_HANDLER,SecurityConstant.AUTH_DEFAULT_FAILURE_HANDLER);
+
+				//add custom successHandler
+				if(StringUtils.isNotBlank(client.getAuthSuccessHandler())){
+					additionalInformation.put(SecurityConstant.AUTH_SUCCESS_HANDLER,client.getAuthSuccessHandler());
+				}
+				//add custom failureHandler
+				if(StringUtils.isNotBlank(client.getAuthFailureHandler())){
+					additionalInformation.put(SecurityConstant.AUTH_FAILURE_HANDLER,client.getAuthFailureHandler());
+				}
 
 				builder.withClient(client.getClientId())
 						.secret(client.getClientSecret())

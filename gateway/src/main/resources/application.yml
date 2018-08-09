@@ -50,10 +50,10 @@ zuul:
     serviceId: user-server
     stripPrefix: 1
     url: ''
-  - path: /book/**
+  - path: /collection/**
     retryable: 1
     sensitiveHeadersList: ''
-    serviceId: book-server
+    serviceId: collection-server
     stripPrefix: 1
     url: ''
   - path: /auth/**

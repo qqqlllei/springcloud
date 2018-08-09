@@ -16,6 +16,8 @@ public class SecurityConstant {
 
     public static final String WECHAT_AUTH_TYPE = "wechat";
 
+    public static final String USERNAME_PASSWORD_AUTH_TYPE="password";
+
     public static final String WECHAT_LOGIN_CODE_PARAM_NAME="code";
     public static final String WECHAT_LOGIN_PASSWORD_PARAM_NAME="password";
     public static final String WECHAT_CLIENT_ID_PARAM_NAME="clientId";
@@ -53,4 +55,9 @@ public class SecurityConstant {
     public static final String AUTH_SUCCESS_HANDLER="authSuccessHandler";
 
     public static final String AUTH_FAILURE_HANDLER="authFailureHandler";
+
+
+    public static final String AUTH_DEFAULT_SUCCESS_HANDLER="defaultAuthSuccessHandler";
+
+    public static final String AUTH_DEFAULT_FAILURE_HANDLER="defaultAuthFailureHandler";
 }

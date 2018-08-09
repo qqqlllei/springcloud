@@ -1,13 +1,12 @@
 package com.qqlei.cloud.auth.security.integration.authenticator;
 
 import com.qqlei.cloud.auth.fegin.UserFegin;
+import com.qqlei.cloud.auth.security.constants.SecurityConstant;
 import com.qqlei.cloud.auth.security.integration.IntegrationAuthentication;
 import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,6 +29,8 @@ public class UsernamePasswordAuthenticator extends AbstractPreparableIntegration
 
     @Override
     public boolean support(IntegrationAuthentication integrationAuthentication) {
-        return StringUtils.isEmpty(integrationAuthentication.getAuthType());
+
+        return (SecurityConstant.USERNAME_PASSWORD_AUTH_TYPE.equals(integrationAuthentication.getAuthType())
+                || StringUtils.isEmpty(integrationAuthentication.getAuthType()));
     }
 }
