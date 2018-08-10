@@ -35,7 +35,7 @@ oauth:
     clients[0]:
       clientId: out-wechat
       clientSecret: outSecret
-      accessTokenValidateSeconds: 7200
+      accessTokenValidateSeconds: 20
       scope: "*"
       clientType: wechat
       wechatAppId: wxa4ea35b0027a480d
