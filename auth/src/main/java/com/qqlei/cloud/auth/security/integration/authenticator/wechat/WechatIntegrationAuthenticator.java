@@ -3,12 +3,14 @@ package com.qqlei.cloud.auth.security.integration.authenticator.wechat;
 import com.alibaba.fastjson.JSONObject;
 import com.qqlei.cloud.auth.exception.BusinessException;
 import com.qqlei.cloud.auth.exception.ExceptionCodeEnum;
+import com.qqlei.cloud.auth.fegin.LoginAbstractFegin;
 import com.qqlei.cloud.auth.fegin.OutWechatFegin;
 import com.qqlei.cloud.auth.fegin.WechatFegin;
 import com.qqlei.cloud.auth.security.constants.SecurityConstant;
 import com.qqlei.cloud.auth.security.integration.IntegrationAuthentication;
 import com.qqlei.cloud.auth.security.integration.authenticator.IntegrationAuthenticator;
 import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
+import com.qqlei.cloud.auth.util.ApplicationContextHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
@@ -25,10 +27,6 @@ import java.util.Map;
 public class WechatIntegrationAuthenticator implements IntegrationAuthenticator {
 
 
-
-    @Autowired
-    private OutWechatFegin outWechatFegin;
-
     @Autowired
     private WechatFegin wechatFegin;
 
@@ -40,18 +38,16 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
 
 
     @Override
-    public SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication) {
+    public SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication)  {
 
         String openId = integrationAuthentication.getUsername();
-        String clientId = integrationAuthentication.getAuthParameter(SecurityConstant.WECHAT_CLIENT_ID_PARAM_NAME);
 
         String password = integrationAuthentication.getAuthParameter(SecurityConstant.WECHAT_LOGIN_PASSWORD_PARAM_NAME);
 
         SysUserAuthentication sysUserAuthentication =null;
 
-        if(SecurityConstant.OUT_WECHAT_CLIENT_ID_NAME.equals(clientId)){
-            sysUserAuthentication = outWechatFegin.findUserByOpenId(openId);
-        }
+        LoginAbstractFegin loginAbstractFegin = ApplicationContextHelper.getBean(integrationAuthentication.getFindUserClassName(), LoginAbstractFegin.class);
+        loginAbstractFegin.findUserById(openId);
 
         if (sysUserAuthentication != null) {
             sysUserAuthentication.setPassword(passwordEncoder.encode(password));
@@ -66,17 +62,19 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
         String clientId = integrationAuthentication.getAuthParameter(SecurityConstant.WECHAT_CLIENT_ID_PARAM_NAME);
         ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
         Map<String,Object> additionalInformation =  clientDetails.getAdditionalInformation();
-        String oAuth2AccessToken = wechatFegin.oauth2getAccessToken(String.valueOf(additionalInformation.get(SecurityConstant.WECHAT_APPID_PARAM_NAME)),
-                String.valueOf(additionalInformation.get(SecurityConstant.WECHAT_SECRET_PARAM_NAME)),
-                password,
-                SecurityConstant.OAUTH2_GET_ACCESS_TOKEN_GRANT_TYPE);
-        JSONObject wechatResponse = JSONObject.parseObject(oAuth2AccessToken);
-        if(wechatResponse.containsKey(SecurityConstant.WECHAT_REQUEST_ERROR_FLAG)){
-            throw new OAuth2Exception(wechatResponse.toJSONString());
-        }
-
-        String openId =  wechatResponse.getString(SecurityConstant.WECHAT_OPENID_PARAM_NAME);
+//        String oAuth2AccessToken = wechatFegin.oauth2getAccessToken(String.valueOf(additionalInformation.get(SecurityConstant.WECHAT_APPID_PARAM_NAME)),
+//                String.valueOf(additionalInformation.get(SecurityConstant.WECHAT_SECRET_PARAM_NAME)),
+//                password,
+//                SecurityConstant.OAUTH2_GET_ACCESS_TOKEN_GRANT_TYPE);
+//        JSONObject wechatResponse = JSONObject.parseObject(oAuth2AccessToken);
+//        if(wechatResponse.containsKey(SecurityConstant.WECHAT_REQUEST_ERROR_FLAG)){
+//            throw new OAuth2Exception(wechatResponse.toJSONString());
+//        }
+//
+//        String openId =  wechatResponse.getString(SecurityConstant.WECHAT_OPENID_PARAM_NAME);
+        String openId="";
         integrationAuthentication.setUsername(openId);
+        integrationAuthentication.setFindUserClassName(String.valueOf(additionalInformation.get(SecurityConstant.AUTH_FIND_USER_INTERFACE_CLASS)));
 
     }
 

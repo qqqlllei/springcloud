@@ -11,7 +11,7 @@ public interface IntegrationAuthenticator {
      * @param integrationAuthentication
      * @return
      */
-    SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication);
+    SysUserAuthentication authenticate(IntegrationAuthentication integrationAuthentication) ;
 
 
     /**

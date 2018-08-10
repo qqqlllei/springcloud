@@ -8,6 +8,7 @@ public class IntegrationAuthentication {
 
     private String authType;
     private String username;
+    private String findUserClassName;
     private Map<String,String[]> authParameters;
 
     public String getAuthParameter(String paramter){
@@ -36,5 +37,13 @@ public class IntegrationAuthentication {
 
     public void setAuthParameters(Map<String, String[]> authParameters) {
         this.authParameters = authParameters;
+    }
+
+    public String getFindUserClassName() {
+        return findUserClassName;
+    }
+
+    public void setFindUserClassName(String findUserClassName) {
+        this.findUserClassName = findUserClassName;
     }
 }

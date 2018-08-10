@@ -56,8 +56,12 @@ public class SecurityConstant {
 
     public static final String AUTH_FAILURE_HANDLER="authFailureHandler";
 
+    public static final String AUTH_FIND_USER_INTERFACE_CLASS="findUserClassName";
+
 
     public static final String AUTH_DEFAULT_SUCCESS_HANDLER="defaultAuthSuccessHandler";
 
     public static final String AUTH_DEFAULT_FAILURE_HANDLER="defaultAuthFailureHandler";
+
+    public static final String AUTH_DEFAULT_FIND_USER_INTERFACE_CLASS="com.qqlei.cloud.auth.fegin.UserFegin";
 }

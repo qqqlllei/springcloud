@@ -44,6 +44,7 @@ oauth:
       wechatAesKey:
       authSuccessHandler: wechatAuthenticationSuccessHandler
       authFailureHandler: wechatAuthenticationFailureHandler
+      findUserClassName: com.qqlei.cloud.auth.fegin.OutWechatFegin
     clients[1]:
       clientId: collection-server
       clientSecret: collectionSecret
