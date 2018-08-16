@@ -50,7 +50,19 @@ oauth:
       clientSecret: collectionSecret
       accessTokenValidateSeconds: 7200
       scope: "*"
-
+    clients[2]:
+      clientId: customer-wechat
+      clientSecret: customerSecret
+      accessTokenValidateSeconds: 20
+      scope: "*"
+      clientType: wechat
+      wechatAppId: wxa4ea35b0027a480d
+      wechatSecret: 5322490f4d2bf839ff57e07038e42eb3
+      wechatToken: qqlei
+      wechatAesKey:
+      authSuccessHandler: wechatAuthenticationSuccessHandler
+      authFailureHandler: wechatAuthenticationFailureHandler
+      findUserClassName: com.qqlei.cloud.auth.fegin.CustomerWechatFegin
 
 ding:
   appid: dingoanvwzywxpqf7wh02u
