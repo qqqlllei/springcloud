@@ -42,7 +42,7 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
 
         String openId = integrationAuthentication.getUsername();
 
-        String password = integrationAuthentication.getAuthParameter(SecurityConstant.WECHAT_LOGIN_PASSWORD_PARAM_NAME);
+        String password = integrationAuthentication.getAuthParameter(SecurityConstant.AUTH_AUTHORIZED_GRANT_PASSWORD);
 
         LoginAbstractFegin loginAbstractFegin = ApplicationContextHelper.getBean(integrationAuthentication.getFindUserClassName(), LoginAbstractFegin.class);
         SysUserAuthentication sysUserAuthentication=loginAbstractFegin.findUserById(openId);
@@ -56,7 +56,7 @@ public class WechatIntegrationAuthenticator implements IntegrationAuthenticator 
 
     @Override
     public void prepare(IntegrationAuthentication integrationAuthentication) {
-        String password = integrationAuthentication.getAuthParameter(SecurityConstant.WECHAT_LOGIN_PASSWORD_PARAM_NAME);
+        String password = integrationAuthentication.getAuthParameter(SecurityConstant.AUTH_AUTHORIZED_GRANT_PASSWORD);
         String clientId = integrationAuthentication.getAuthParameter(SecurityConstant.WECHAT_CLIENT_ID_PARAM_NAME);
         ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
         Map<String,Object> additionalInformation =  clientDetails.getAdditionalInformation();

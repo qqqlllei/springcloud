@@ -13,13 +13,12 @@ public class SecurityConstant {
 
     public static final String AUTH_AUTHORIZED_GRANT_PASSWORD ="password";
 
-
     public static final String WECHAT_AUTH_TYPE = "wechat";
 
-    public static final String USERNAME_PASSWORD_AUTH_TYPE="password";
+    public static final String APP_TOKEN_NAME="appToken";
 
     public static final String WECHAT_LOGIN_CODE_PARAM_NAME="code";
-    public static final String WECHAT_LOGIN_PASSWORD_PARAM_NAME="password";
+
     public static final String WECHAT_CLIENT_ID_PARAM_NAME="clientId";
 
     public static final String WECHAT_APPID_PARAM_NAME="wechatAppId";
