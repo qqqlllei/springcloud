@@ -68,6 +68,12 @@ zuul:
     serviceId: out-wechat
     stripPrefix: 1
     url: ''
+  - path: /customer/**
+    retryable: 1
+    sensitiveHeadersList: ''
+    serviceId: customer-wechat
+    stripPrefix: 1
+    url: ''
 
 management:
   security:

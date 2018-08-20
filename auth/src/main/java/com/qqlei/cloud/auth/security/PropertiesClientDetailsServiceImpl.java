@@ -49,15 +49,6 @@ public class PropertiesClientDetailsServiceImpl implements ClientDetailsService 
 				additionalInformation.put(SecurityConstant.AUTH_DEFAULT_FAILURE_HANDLER,SecurityConstant.AUTH_DEFAULT_FAILURE_HANDLER);
 				additionalInformation.put(SecurityConstant.AUTH_FIND_USER_INTERFACE_CLASS,SecurityConstant.AUTH_DEFAULT_FIND_USER_INTERFACE_CLASS);
 
-				//add custom successHandler
-				if(StringUtils.isNotBlank(client.getAuthSuccessHandler())){
-					additionalInformation.put(SecurityConstant.AUTH_SUCCESS_HANDLER,client.getAuthSuccessHandler());
-				}
-				//add custom failureHandler
-				if(StringUtils.isNotBlank(client.getAuthFailureHandler())){
-					additionalInformation.put(SecurityConstant.AUTH_FAILURE_HANDLER,client.getAuthFailureHandler());
-				}
-
 				//add custom findUserClassName
 				if(StringUtils.isNotBlank(client.getFindUserClassName())){
 					additionalInformation.put(SecurityConstant.AUTH_FIND_USER_INTERFACE_CLASS,client.getFindUserClassName());

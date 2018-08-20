@@ -8,4 +8,6 @@ import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
 public interface LoginAbstractFegin {
 
     SysUserAuthentication findUserById(String id);
+
+    SysUserAuthentication findUserByPhone(String phone);
 }

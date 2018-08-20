@@ -40,8 +40,9 @@ public class WechatAuthenticationSuccessHandler implements AuthSuccessHandler {
                                         Authentication authentication,OAuth2AccessToken token,OAuth2Authentication oAuth2Authentication,
                                         SysUserAuthentication sysUserAuthentication,ClientDetails clientDetails) throws ServletException, IOException {
         Map<String,Object> tokenAdditionalInformation = token.getAdditionalInformation();
-        String sessionKey = clientDetails.getClientId()+"_"+sysUserAuthentication.getOpenid();
+        String sessionKey = clientDetails.getClientId()+"_"+sysUserAuthentication.getOpenId();
         tokenAdditionalInformation.put(SecurityConstant.AUTH_SESSION_KEY,sessionKey);
+        tokenAdditionalInformation.put(SecurityConstant.WECHAT_OPENID_PARAM_NAME,sysUserAuthentication.getOpenId());
         String tokenValue =token.getValue();
         token = jwtAccessTokenConverter.enhance(token,oAuth2Authentication);
         JSONObject jsonObject = (JSONObject) JSONObject.toJSON(sysUserAuthentication);

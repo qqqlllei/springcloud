@@ -42,8 +42,6 @@ oauth:
       wechatSecret: 5322490f4d2bf839ff57e07038e42eb3
       wechatToken: qqlei
       wechatAesKey:
-      authSuccessHandler: wechatAuthenticationSuccessHandler
-      authFailureHandler: wechatAuthenticationFailureHandler
       findUserClassName: com.qqlei.cloud.auth.fegin.OutWechatFegin
     clients[1]:
       clientId: collection-server
@@ -53,19 +51,29 @@ oauth:
     clients[2]:
       clientId: customer-wechat
       clientSecret: customerSecret
-      accessTokenValidateSeconds: 20
+      accessTokenValidateSeconds: 7200
       scope: "*"
       clientType: wechat
       wechatAppId: wxa4ea35b0027a480d
       wechatSecret: 5322490f4d2bf839ff57e07038e42eb3
       wechatToken: qqlei
       wechatAesKey:
+      findUserClassName: com.qqlei.cloud.auth.fegin.CustomerWechatFegin
+
+    handlers[0]:
+      auth_type: wechat
       authSuccessHandler: wechatAuthenticationSuccessHandler
       authFailureHandler: wechatAuthenticationFailureHandler
-      findUserClassName: com.qqlei.cloud.auth.fegin.CustomerWechatFegin
+
+    handlers[1]:
+      auth_type: sms
+      authSuccessHandler: smsAuthenticationSuccessHandler
+      authFailureHandler: smsAuthenticationFailureHandler
 
 ding:
   appid: dingoanvwzywxpqf7wh02u
   appsecret: 6kwRXPawkcZ91ouHALBSurtqV8lBXoXPyd9dWl0e9X0piWPoNgrirv42_4vdtmrU
   corpid: ding951c64ba07e7e73835c2f4657eb6378f
   corpsecret: VYWz1onq3S_7eAOadFYPyZ-mtA0238XjsdXMoqu97AOX1ykIbdClfA5k5nmNkJvZ
+
+

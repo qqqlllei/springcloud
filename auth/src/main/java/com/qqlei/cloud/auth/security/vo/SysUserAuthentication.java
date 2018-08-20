@@ -13,7 +13,7 @@ public class SysUserAuthentication implements Serializable {
 
     private String email;
 
-    private String mobile;
+    private String phone;
 
     private String status;
 
@@ -21,7 +21,7 @@ public class SysUserAuthentication implements Serializable {
 
     private String type;
 
-    private String openid;
+    private String openId;
     private String certNo;
 
     public String getUsername() {
@@ -72,13 +72,6 @@ public class SysUserAuthentication implements Serializable {
         this.type = type;
     }
 
-    public String getOpenid() {
-        return openid;
-    }
-
-    public void setOpenid(String openid) {
-        this.openid = openid;
-    }
 
     public String getId() {
         return id;
@@ -88,19 +81,27 @@ public class SysUserAuthentication implements Serializable {
         this.id = id;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
     public String getCertNo() {
         return certNo;
     }
 
     public void setCertNo(String certNo) {
         this.certNo = certNo;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

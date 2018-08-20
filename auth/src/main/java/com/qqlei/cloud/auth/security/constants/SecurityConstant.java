@@ -19,6 +19,8 @@ public class SecurityConstant {
 
     public static final String WECHAT_LOGIN_CODE_PARAM_NAME="code";
 
+    public static final String SMS_LOGIN_PHONE_PARAM_NAME="phone";
+
     public static final String WECHAT_CLIENT_ID_PARAM_NAME="clientId";
 
     public static final String WECHAT_APPID_PARAM_NAME="wechatAppId";
@@ -31,7 +33,7 @@ public class SecurityConstant {
 
     public static final String OAUTH2_GET_ACCESS_TOKEN_GRANT_TYPE="authorization_code";
 
-    public static final String WECHAT_OPENID_PARAM_NAME="openid";
+    public static final String WECHAT_OPENID_PARAM_NAME="openId";
 
     public static final String WECHAT_REQUEST_ERROR_FLAG="errcode";
 
@@ -63,4 +65,9 @@ public class SecurityConstant {
     public static final String AUTH_DEFAULT_FAILURE_HANDLER="defaultAuthFailureHandler";
 
     public static final String AUTH_DEFAULT_FIND_USER_INTERFACE_CLASS="com.qqlei.cloud.auth.fegin.UserFegin";
+
+    public static final String AUTH_LOGIN_SUCCESS_STATUS="0000";
+
+
+
 }

@@ -9,6 +9,8 @@ import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * Created by 李雷 on 2018/7/24.
  */
@@ -31,7 +33,7 @@ public class DingDingIntegrationAuthenticator implements IntegrationAuthenticato
     }
 
     @Override
-    public void prepare(IntegrationAuthentication integrationAuthentication) {
+    public void prepare(IntegrationAuthentication integrationAuthentication,Map<String,Object> additionalInformation ) {
         String code = integrationAuthentication.getAuthParameter(SecurityConstant.DING_DING_LOGIN_CODE_PARAM_NAME);
         String phone = dingTokenServer.getUserPhoneByAuthCode(code);
         integrationAuthentication.setUsername(phone);

@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 @Primary
-public class UsernamePasswordAuthenticator extends AbstractPreparableIntegrationAuthenticator {
+public class UsernamePasswordAuthenticator implements IntegrationAuthenticator {
 
     @Autowired
     private UserFegin userFegin;
@@ -23,14 +25,19 @@ public class UsernamePasswordAuthenticator extends AbstractPreparableIntegration
     }
 
     @Override
-    public void prepare(IntegrationAuthentication integrationAuthentication) {
+    public void prepare(IntegrationAuthentication integrationAuthentication,Map<String,Object> additionalInformation) {
 
     }
 
     @Override
     public boolean support(IntegrationAuthentication integrationAuthentication) {
 
-        return (SecurityConstant.USERNAME_PASSWORD_AUTH_TYPE.equals(integrationAuthentication.getAuthType())
+        return (SecurityConstant.AUTH_AUTHORIZED_GRANT_PASSWORD.equals(integrationAuthentication.getAuthType())
                 || StringUtils.isEmpty(integrationAuthentication.getAuthType()));
+    }
+
+    @Override
+    public void complete(IntegrationAuthentication integrationAuthentication) {
+
     }
 }

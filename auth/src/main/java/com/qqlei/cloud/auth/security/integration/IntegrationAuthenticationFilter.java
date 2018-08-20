@@ -3,9 +3,12 @@ package com.qqlei.cloud.auth.security.integration;
 import com.qqlei.cloud.auth.security.constants.SecurityConstant;
 import com.qqlei.cloud.auth.security.integration.authenticator.IntegrationAuthenticator;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -32,6 +35,9 @@ public class IntegrationAuthenticationFilter extends OncePerRequestFilter implem
     private ApplicationContext applicationContext;
 
     private RequestMatcher requestMatcher;
+
+    @Autowired
+    private ClientDetailsService clientDetailsService;
 
     public IntegrationAuthenticationFilter(){
         this.requestMatcher = new OrRequestMatcher(
@@ -81,7 +87,11 @@ public class IntegrationAuthenticationFilter extends OncePerRequestFilter implem
 
         for (IntegrationAuthenticator authenticator: authenticators) {
             if(authenticator.support(integrationAuthentication)){
-                authenticator.prepare(integrationAuthentication);
+                String clientId = integrationAuthentication.getAuthParameter(SecurityConstant.WECHAT_CLIENT_ID_PARAM_NAME);
+                ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
+                Map<String,Object> additionalInformation =  clientDetails.getAdditionalInformation();
+                integrationAuthentication.setFindUserClassName(String.valueOf(additionalInformation.get(SecurityConstant.AUTH_FIND_USER_INTERFACE_CLASS)));
+                authenticator.prepare(integrationAuthentication,additionalInformation);
             }
         }
     }

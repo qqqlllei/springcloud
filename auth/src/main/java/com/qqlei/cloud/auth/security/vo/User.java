@@ -17,7 +17,7 @@ public class User implements UserDetails, CredentialsContainer {
     private String password;
     private String status;
     private String type;
-    private String mobile;
+    private String phone;
     private String email;
     private String name;
     private String certNo;
@@ -25,7 +25,7 @@ public class User implements UserDetails, CredentialsContainer {
     private Collection<String> roles = new ArrayList<String>();
     private Collection<GrantedAuthority> grantedAuthorities;
     private Long tenantId;
-    private String openid;
+    private String openId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -134,14 +134,6 @@ public class User implements UserDetails, CredentialsContainer {
         this.password = null;
     }
 
-    public String getOpenid() {
-        return openid;
-    }
-
-    public void setOpenid(String openid) {
-        this.openid = openid;
-    }
-
     public String getId() {
         return id;
     }
@@ -150,19 +142,27 @@ public class User implements UserDetails, CredentialsContainer {
         this.id = id;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
     public String getCertNo() {
         return certNo;
     }
 
     public void setCertNo(String certNo) {
         this.certNo = certNo;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

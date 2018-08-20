@@ -15,8 +15,6 @@ public class OAuth2ClientProperties {
     private String wechatSecret;
     private String wechatToken;
     private String wechatAesKey;
-    private String authSuccessHandler;
-    private String authFailureHandler;
     private String findUserClassName;
 
 
@@ -98,22 +96,6 @@ public class OAuth2ClientProperties {
 
     public void setWechatAesKey(String wechatAesKey) {
         this.wechatAesKey = wechatAesKey;
-    }
-
-    public String getAuthSuccessHandler() {
-        return authSuccessHandler;
-    }
-
-    public void setAuthSuccessHandler(String authSuccessHandler) {
-        this.authSuccessHandler = authSuccessHandler;
-    }
-
-    public String getAuthFailureHandler() {
-        return authFailureHandler;
-    }
-
-    public void setAuthFailureHandler(String authFailureHandler) {
-        this.authFailureHandler = authFailureHandler;
     }
 
     public String getFindUserClassName() {

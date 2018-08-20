@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface CustomerWechatFegin extends LoginAbstractFegin{
 
     @Override
-    @RequestMapping(value="/channelStaff/findUserByOpenId")
+    @RequestMapping(value="/api/user/findUserByOpenId")
     SysUserAuthentication findUserById(@RequestParam("openId") String openId);
 
+
+    @Override
+    @RequestMapping(value="/api/user/findUserByPhone")
+    SysUserAuthentication findUserByPhone(@RequestParam("phone") String phone);
 }

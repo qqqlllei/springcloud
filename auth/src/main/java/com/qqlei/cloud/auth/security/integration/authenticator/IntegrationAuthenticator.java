@@ -4,6 +4,8 @@ package com.qqlei.cloud.auth.security.integration.authenticator;
 import com.qqlei.cloud.auth.security.integration.IntegrationAuthentication;
 import com.qqlei.cloud.auth.security.vo.SysUserAuthentication;
 
+import java.util.Map;
+
 public interface IntegrationAuthenticator {
 
     /**
@@ -18,7 +20,7 @@ public interface IntegrationAuthenticator {
      * 进行预处理
      * @param integrationAuthentication
      */
-    void prepare(IntegrationAuthentication integrationAuthentication);
+    void prepare(IntegrationAuthentication integrationAuthentication,Map<String,Object> additionalInformation);
 
      /**
      * 判断是否支持集成认证类型
