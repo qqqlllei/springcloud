@@ -1,6 +1,8 @@
 package com.qqlei.cloud.provider.user.web;
 
+import com.qqlei.cloud.provider.user.domain.User;
 import com.qqlei.cloud.provider.user.fegin.BookFegin;
+import com.qqlei.cloud.provider.user.service.UserService;
 import com.qqlei.security.session.SysUserAuthentication;
 import com.qqlei.security.session.UserSessionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class UserController {
     @Autowired
     private BookFegin bookFegin;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("/getCurrentSessionInfo")
     String getCurrentSessionInfo(@RequestParam("name") String name){
         SysUserAuthentication sysUserAuthentication =  UserSessionContext.get();
@@ -24,5 +29,13 @@ public class UserController {
             name=sysUserAuthentication.getName();
         }
         return bookFegin.helloService(name);
+    }
+
+    @RequestMapping("/saveUser")
+    public void saveUser(@RequestParam("id") long id,@RequestParam("name") String name){
+        User user = new User();
+        user.setName(name);
+        user.setId(id);
+        userService.saveUser(user);
     }
 }

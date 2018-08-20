@@ -1,5 +1,6 @@
 package com.qqlei.cloud.provider.user;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -16,7 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableScheduling
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.qqlei.cloud.provider.user.fegin","com.reliable.message.client.feign"})
+@MapperScan(basePackages = {"com.qqlei.cloud.provider.user.dao","com.reliable.message.client.mapper"})
 public class UserApplication {
 
     public static void main(String[] args) {
