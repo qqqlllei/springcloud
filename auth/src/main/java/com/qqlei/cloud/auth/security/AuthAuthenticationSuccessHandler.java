@@ -48,14 +48,20 @@ public class AuthAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
 		OAuth2AccessToken token =defaultTokenServices.createAccessToken(oAuth2Authentication);
 		String authType = request.getParameter(SecurityConstant.AUTH_TYPE_PARM_NAME);
-		String authSuccessHandlerBeanName =  getSuccessHandlerByType(authType);
+		Map<String,Object> additionalInformation = clientDetails.getAdditionalInformation();
+		String authSuccessHandlerBeanName =  getSuccessHandlerByType(authType,additionalInformation);
 		AuthSuccessHandler authenticationSuccessHandler =  ApplicationContextHelper.getBean(authSuccessHandlerBeanName,AuthSuccessHandler.class);
 		authenticationSuccessHandler.onAuthenticationSuccess(request,response,authentication,token,oAuth2Authentication,sysUserAuthentication,clientDetails);
 
 
 	}
 
-	private String getSuccessHandlerByType(String type){
+	private String getSuccessHandlerByType(String type,Map<String,Object> additionalInformation){
+		String key = type+SecurityConstant.AUTH_SUCCESS_HANDLER_POSTFIX;
+		if(additionalInformation.containsKey(key)){
+			return String.valueOf(additionalInformation.get(key));
+		}
+
 		List<Map<String, String>> handlers =  authClientProperties.getHandlers();
 		for (Map<String,String> map: handlers) {
 			if(map.get(SecurityConstant.AUTH_TYPE_PARM_NAME).equals(type)){

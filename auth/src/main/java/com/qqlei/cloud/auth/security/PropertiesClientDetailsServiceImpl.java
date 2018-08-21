@@ -54,6 +54,11 @@ public class PropertiesClientDetailsServiceImpl implements ClientDetailsService 
 					additionalInformation.put(SecurityConstant.AUTH_FIND_USER_INTERFACE_CLASS,client.getFindUserClassName());
 				}
 
+				// add sms auth success handler
+				if(StringUtils.isNotBlank(client.getSmsAuthSuccessHandler())){
+					additionalInformation.put(SecurityConstant.SMS_AUTH_SUCCESS_HANDLER_SUCCESS,client.getSmsAuthSuccessHandler());
+				}
+
 
 
 				builder.withClient(client.getClientId())

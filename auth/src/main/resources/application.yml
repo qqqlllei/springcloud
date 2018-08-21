@@ -59,6 +59,7 @@ oauth:
       wechatToken: qqlei
       wechatAesKey:
       findUserClassName: com.qqlei.cloud.auth.fegin.CustomerWechatFegin
+      smsAuthSuccessHandler: customerSmsAuthSuccessHandler
 
     handlers[0]:
       auth_type: wechat

@@ -55,6 +55,10 @@ public class SecurityConstant {
 
     public static final String AUTH_SUCCESS_HANDLER="authSuccessHandler";
 
+    public static final String AUTH_SUCCESS_HANDLER_POSTFIX="AuthSuccessHandler";
+
+    public static final String SMS_AUTH_SUCCESS_HANDLER_SUCCESS="smsAuthSuccessHandler";
+
     public static final String AUTH_FAILURE_HANDLER="authFailureHandler";
 
     public static final String AUTH_FIND_USER_INTERFACE_CLASS="findUserClassName";

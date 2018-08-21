@@ -20,4 +20,9 @@ public interface CustomerWechatFegin extends LoginAbstractFegin{
     @Override
     @RequestMapping(value="/api/user/findUserByPhone")
     SysUserAuthentication findUserByPhone(@RequestParam("phone") String phone);
+
+
+    @RequestMapping(value="/api/user/loginSuccess")
+    void loginSuccess(@RequestParam("openId") String openId,@RequestParam("phone") String phone);
+
 }

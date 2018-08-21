@@ -16,6 +16,7 @@ public class OAuth2ClientProperties {
     private String wechatToken;
     private String wechatAesKey;
     private String findUserClassName;
+    private String smsAuthSuccessHandler;
 
 
     public String getClientId() {
@@ -104,5 +105,13 @@ public class OAuth2ClientProperties {
 
     public void setFindUserClassName(String findUserClassName) {
         this.findUserClassName = findUserClassName;
+    }
+
+    public String getSmsAuthSuccessHandler() {
+        return smsAuthSuccessHandler;
+    }
+
+    public void setSmsAuthSuccessHandler(String smsAuthSuccessHandler) {
+        this.smsAuthSuccessHandler = smsAuthSuccessHandler;
     }
 }
