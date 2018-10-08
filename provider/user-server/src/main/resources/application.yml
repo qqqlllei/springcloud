@@ -7,6 +7,8 @@ spring:
     kafka:
       topic: zipkin
 
+  redis:
+    host: 10.33.80.101
   kafka:
     bootstrap-servers: 10.33.80.101:9092
 
@@ -18,10 +20,13 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.33.80.101:3306/user_system?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://127.0.0.1:3306/user_system?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     username: root
     password: 123456
 
+  cloud:
+    inetutils:
+      preferred-networks[0]: 10
 
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
@@ -30,9 +35,16 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka/
-
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 5
 
 reliable:
   message:
     producerGroup: user-server
+    reliableMessageProducer: true
 
+ribbon:
+  ServerListRefreshInterval: 2000

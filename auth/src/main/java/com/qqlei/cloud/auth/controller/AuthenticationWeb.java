@@ -3,7 +3,7 @@ package com.qqlei.cloud.auth.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.qqlei.cloud.auth.security.constants.SecurityConstant;
 import com.qqlei.cloud.auth.security.dingding.DingTokenServer;
-import com.qqlei.security.wechat.WechatUrlHelper;
+import com.qqlei.cloud.auth.util.WechatUrlHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

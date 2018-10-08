@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 7020
 spring:
   application:
     name: auth-server

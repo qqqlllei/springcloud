@@ -2,12 +2,18 @@
 spring:
   application:
     name: zipkin-server
+  sleuth:
+    enabled: false
+    sampler:
+      percentage: 1.0
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 10.33.80.101:9092
+          zkNodes: 10.33.80.101:2181
 
 zipkin:
-  collector:
-    kafka:
-      zookeeper: 10.33.80.101:2181
-
   storage:
     type: elasticsearch
     elasticsearch:
@@ -20,4 +26,18 @@ zipkin:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka/
+      defaultZone: http://10.33.80.114:8761/eureka/,http://10.0.8.193:8761/eureka/
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+ribbon:
+  ServerListRefreshInterval: 2000
+server:
+  port: 8090
+
+
+
